@@ -1,0 +1,10 @@
+spring:
+    application:
+        name: CarShowroom
+    
+    profiles:
+        active: dev # test, prod
+
+server:
+  port: 8080
+
