@@ -3,55 +3,95 @@ package com.tuantran.CarShowroom.exception;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 
+import java.text.ParseException;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(Exception.class)
-    public ProblemDetail handleSecurityException(Exception exception) {
+
+    @ExceptionHandler(value = RuntimeException.class)
+    ResponseEntity<?> RuntimeException(RuntimeException ex) {
+        System.out.println("Handle RuntimeException: " + ex.getMessage());
         ProblemDetail errorDetail = null;
-
-        if (exception instanceof BadCredentialsException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
-            errorDetail.setProperty("timestamp", Instant.now().toString());
-            errorDetail.setProperty("description", "The username or password is incorrect");
-            return errorDetail;
-        }
-
-        if (exception instanceof AccountStatusException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-            errorDetail.setProperty("description", "The account is locked");
-        }
-
-        if (exception instanceof AccessDeniedException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-            errorDetail.setProperty("description", "You are not authorized to access this resource");
-        }
-
-        if (exception instanceof SignatureException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-            errorDetail.setProperty("description", "The JWT signature is invalid");
-        }
-
-        if (exception instanceof ExpiredJwtException) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-            errorDetail.setProperty("description", "The JWT token has expired");
-        }
-
-        if (errorDetail == null) {
-            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
-            errorDetail.setProperty("description", "Unknown internal server error.");
-        }
-
+        errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
         errorDetail.setProperty("timestamp", Instant.now().toString());
-        return errorDetail;
+        return ResponseEntity.badRequest().body(errorDetail);
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ProblemDetail> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        System.out.println("Handle MethodArgumentNotValidException: " + ex.getMessage());
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation failed");
+        errorDetail.setProperty("errors", errors);
+        errorDetail.setProperty("timestamp", Instant.now());
+
+        return ResponseEntity.badRequest().body(errorDetail);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ProblemDetail> handleMissingParams(MissingServletRequestParameterException ex) {
+        System.out.println("Handle MissingServletRequestParameterException: " + ex.getMessage());
+
+        Map<String, String> errors = new HashMap<>();
+        errors.put(ex.getParameterName(), "Parameter [" + ex.getParameterName() + "] is required");
+
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Missing required parameter");
+        errorDetail.setProperty("errors", errors);
+        errorDetail.setProperty("timestamp", Instant.now());
+
+        return ResponseEntity.badRequest().body(errorDetail);
+    }
+
+    @ExceptionHandler(ParseException.class)
+    public ResponseEntity<ProblemDetail> handleParseException(ParseException ex) {
+        System.out.println("Handle ParseException: " + ex.getMessage());
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        errorDetail.setProperty("timestamp", Instant.now());
+        return ResponseEntity.badRequest().body(errorDetail);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ProblemDetail> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+        System.out.println("Handle UsernameNotFoundException: " + ex.getMessage());
+
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        errorDetail.setProperty("timestamp", Instant.now());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetail);
+    }
+
+    // @ResponseStatus(HttpStatus.BAD_REQUEST)
+    // @ExceptionHandler(NoSuchFileException.class)
+    // public ResponseEntity<ProblemDetail> handleNoSuchFileException(NoSuchFileException ex) {
+    //     System.out.println("Handle NoSuchFileException: " + ex.getMessage());
+    //     ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    //     errorDetail.setProperty("timestamp", Instant.now());
+    //     return ResponseEntity.badRequest().body(errorDetail);
+    // }
 }
