@@ -20,7 +20,7 @@ logging:
 
 jwt:
   secret: "cNdOiK0ggz77Svs34Y/Wg0CweqnLUi0WQacHsBfLO/0c67s8Bqrugr/iYf0jZo52"
-  expiration: 3600000
+  expiration: 180000
 
 server:
   port: 8080
