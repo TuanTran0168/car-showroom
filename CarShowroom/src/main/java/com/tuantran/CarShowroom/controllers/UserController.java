@@ -16,7 +16,7 @@ import com.tuantran.CarShowroom.service.implement.RoleServiceImpl;
 import com.tuantran.CarShowroom.service.security.JwtService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class UserController {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
