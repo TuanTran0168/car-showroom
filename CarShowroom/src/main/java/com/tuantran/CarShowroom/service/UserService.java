@@ -14,4 +14,6 @@ public interface UserService {
     List<UserResponse> getAllUsers();
 
     Page<UserResponse> findAll(Pageable pageable);
+
+    UserResponse findByUsername(String username);
 }

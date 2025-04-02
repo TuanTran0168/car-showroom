@@ -4,6 +4,7 @@ import com.tuantran.CarShowroom.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -29,6 +30,14 @@ public class SecurityConfig {
     @Autowired
     private PasswordUtils passwordUtils;
 
+    private final String WHITE_LIST_ENDPOINTS[] = {
+            "/api/v1/authentication/token",
+    };
+
+    private final String PUBLIC_ENDPOINTS[] = {
+            "/api/v1/users/**"
+    };
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl(); // Ensure UserService implements UserDetailsService
@@ -36,11 +45,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // WARNING: CHECK HERE If you encounter an HTTP status 403 (Forbidden) with an empty response body
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/welcome", "/api/v1/authentication/token").permitAll()
-                        .requestMatchers("/api/v1/users/**").permitAll()
+                        .requestMatchers(WHITE_LIST_ENDPOINTS).permitAll()
+                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+//                        .requestMatchers(PUBLIC_ENDPOINTS).hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/auth/user/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/auth/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated() // Protect all other endpoints

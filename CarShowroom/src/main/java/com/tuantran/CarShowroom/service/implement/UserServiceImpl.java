@@ -61,4 +61,10 @@ public class UserServiceImpl implements UserService {
         // mapper for Collections (CANNOT USE THIS MAPPER)
         // return this.userMapper.toUserResponse(this.userRepository.findAll(pageable));
     }
+
+    @Override
+    public UserResponse findByUsername(String username) {
+        return this.userRepository.findByUsername(username).map(userMapper::toUserResponse)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }

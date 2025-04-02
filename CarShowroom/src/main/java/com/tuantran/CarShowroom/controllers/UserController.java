@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +34,17 @@ public class UserController {
     public ResponseEntity<UserCreateResponse> createUser(@RequestBody UserCreateRequest userCreateRequest) {
         UserCreateResponse userCreateResponse = userService.createUser(userCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreateResponse);
+    }
+
+    /**
+     * 🔹 Create a new user
+     */
+    @PostMapping("/current-user")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    public ResponseEntity<UserResponse> currentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return ResponseEntity.ok(this.userService.findByUsername(username));
     }
 
     /**

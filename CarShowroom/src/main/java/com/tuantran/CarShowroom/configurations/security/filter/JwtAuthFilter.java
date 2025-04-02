@@ -2,6 +2,7 @@ package com.tuantran.CarShowroom.configurations.security.filter;
 
 import java.io.IOException;
 
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -78,6 +79,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     new JwtAuthenticationException("The JWT token has expired"));
         }
         catch (UsernameNotFoundException e) {
+            authenticationFailureHandler.onAuthenticationFailure(request, response,
+                    new JwtAuthenticationException(e.getMessage()));
+        }
+        catch (MalformedJwtException e) {
             authenticationFailureHandler.onAuthenticationFailure(request, response,
                     new JwtAuthenticationException(e.getMessage()));
         }
