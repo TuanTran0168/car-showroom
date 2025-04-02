@@ -72,12 +72,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             authenticationFailureHandler.onAuthenticationFailure(request, response,
                     new JwtAuthenticationException("The JWT signature is invalid"));
-            return; // Stop further processing of the filter chain
         } catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             authenticationFailureHandler.onAuthenticationFailure(request, response,
                     new JwtAuthenticationException("The JWT token has expired"));
-            return; // Stop further processing of the filter chain
         }
         catch (UsernameNotFoundException e) {
             authenticationFailureHandler.onAuthenticationFailure(request, response,

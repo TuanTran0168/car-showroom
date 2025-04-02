@@ -15,6 +15,8 @@ import java.util.Set;
 public class Role extends BaseEntity {
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role")
+    @ToString.Exclude
     private Set<User> userList;
 }

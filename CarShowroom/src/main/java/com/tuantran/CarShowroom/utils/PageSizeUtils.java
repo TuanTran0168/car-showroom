@@ -11,6 +11,8 @@ import java.util.Map;
 @Component
 public class PageSizeUtils {
     public static Pageable getPageable(Map<String, String> params) throws MissingServletRequestParameterException {
+        /* params: page, size, sort, direction */
+
         String pageStr = params.get("page");
         String sizeStr = params.get("size");
 

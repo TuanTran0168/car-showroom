@@ -1,16 +1,14 @@
 package com.tuantran.CarShowroom.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity{
 
     @Column(name = "name", nullable = false)
@@ -24,5 +22,6 @@ public class User extends BaseEntity{
 
     @ManyToOne()
     @JoinColumn(name = "role_id")
+    @ToString.Exclude
     private Role role;
 }
