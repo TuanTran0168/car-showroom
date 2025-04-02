@@ -1,4 +1,4 @@
-package com.tuantran.CarShowroom.payload.request;
+package com.tuantran.CarShowroom.payload.request.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCreateRequest {
-    private String name;
+public class AuthRequest {
     private String username;
     private String password;
-    private String role_id;
 }

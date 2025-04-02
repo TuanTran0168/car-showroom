@@ -3,6 +3,7 @@ package com.tuantran.CarShowroom.exception;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 
+import java.nio.file.NoSuchFileException;
 import java.text.ParseException;
 import java.time.Instant;
 import java.util.HashMap;
@@ -17,11 +18,13 @@ import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,8 +32,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     ResponseEntity<?> RuntimeException(RuntimeException ex) {
         System.out.println("Handle RuntimeException: " + ex.getMessage());
-        ProblemDetail errorDetail = null;
-        errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
         errorDetail.setProperty("timestamp", Instant.now().toString());
         return ResponseEntity.badRequest().body(errorDetail);
     }
@@ -86,12 +88,28 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetail);
     }
 
-    // @ResponseStatus(HttpStatus.BAD_REQUEST)
-    // @ExceptionHandler(NoSuchFileException.class)
-    // public ResponseEntity<ProblemDetail> handleNoSuchFileException(NoSuchFileException ex) {
-    //     System.out.println("Handle NoSuchFileException: " + ex.getMessage());
-    //     ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
-    //     errorDetail.setProperty("timestamp", Instant.now());
-    //     return ResponseEntity.badRequest().body(errorDetail);
-    // }
+    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    public ResponseEntity<ProblemDetail> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.METHOD_NOT_ALLOWED, ex.getMessage());
+        errorDetail.setDetail(ex.getMessage());
+        errorDetail.setProperty("timestamp", Instant.now());
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(errorDetail);
+    }
+
+     @ResponseStatus(HttpStatus.BAD_REQUEST)
+     @ExceptionHandler(NoSuchFileException.class)
+     public ResponseEntity<ProblemDetail> handleNoSuchFileException(NoSuchFileException ex) {
+         System.out.println("Handle NoSuchFileException: " + ex.getMessage());
+         ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+         errorDetail.setProperty("timestamp", Instant.now());
+         return ResponseEntity.badRequest().body(errorDetail);
+     }
+
+    @ExceptionHandler(value = {NoResourceFoundException.class})
+    public ResponseEntity<ProblemDetail> handleNoResourceFound(NoResourceFoundException ex) {
+        ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        errorDetail.setDetail(ex.getMessage());
+        errorDetail.setProperty("timestamp", Instant.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetail);
+    }
 }
