@@ -45,11 +45,6 @@ public class UserServiceImpl implements UserService {
         userEntity.setRole(role);
 
         User user = this.userRepository.save(userEntity);
-        System.out.println("CCCCCCCCCCCCCCCCCC");
-        System.out.println(user);
-
-        System.out.println(this.userMapper.toUserCreateResponse(user));
-
         return this.userMapper.toUserCreateResponse(user);
     }
 
@@ -60,6 +55,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserResponse> findAll(Pageable pageable) {
-        return this.userRepository.findAll(pageable).map(userMapper::toUserResponse);
+         return this.userRepository.findAll(pageable).map(userMapper::toUserResponse);
+
+        // use mapper for Collections
+        // mapper for Collections (CANNOT USE THIS MAPPER)
+        // return this.userMapper.toUserResponse(this.userRepository.findAll(pageable));
     }
 }
