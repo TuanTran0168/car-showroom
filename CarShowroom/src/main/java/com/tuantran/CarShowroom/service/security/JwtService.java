@@ -40,6 +40,7 @@ public class JwtService {
         return Jwts.builder()
                 .claims(claims)
                 .subject(userName)
+                .issuer("TuanTran")
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) // Token valid for 3 minutes
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
