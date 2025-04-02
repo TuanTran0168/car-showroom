@@ -1,4 +1,4 @@
-package com.tuantran.CarShowroom.configurations.security;
+package com.tuantran.CarShowroom.configurations.setup;
 
 import com.tuantran.CarShowroom.entity.Role;
 import com.tuantran.CarShowroom.entity.User;
@@ -9,11 +9,9 @@ import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @RequiredArgsConstructor
@@ -104,6 +102,7 @@ public class ApplicationSetupConfig {
                 log.info("User '{}' already exists. Skipping creation.", USERNAME_USER + "2");
             }
 
+            log.warn("WARNING: CHECK securityFilterChain If you encounter an HTTP status 403 (Forbidden) with an EMPTY RESPONSE body");
             log.info("Application Initialization Completed!");
         };
     }
