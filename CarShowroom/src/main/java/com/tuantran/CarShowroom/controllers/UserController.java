@@ -4,6 +4,7 @@ import com.tuantran.CarShowroom.payload.response.user.UserCreateResponse;
 import com.tuantran.CarShowroom.payload.response.user.UserResponse;
 import com.tuantran.CarShowroom.service.UserService;
 import com.tuantran.CarShowroom.utils.PageSizeUtils;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     /**
-     * 🔹 Create a new user
+     * 🔹 Get current user by token
      */
     @PostMapping("/current-user")
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
@@ -58,6 +59,7 @@ public class UserController {
     /**
      * 🔹 Get all users
      * 🔹 Pagination
+     * 🔹 Map<String, String>
      */
     @GetMapping("/page")
     public ResponseEntity<Page<UserResponse>> findAllPage(@RequestParam Map<String, String> params) throws MissingServletRequestParameterException {
@@ -65,43 +67,19 @@ public class UserController {
         return ResponseEntity.ok(this.userService.findAll(pageable));
     }
 
+    /**
+     * 🔹 Get all users
+     * 🔹 Pagination
+     * 🔹 Params (page, size, sort, direction) for swagger
+     */
+    @GetMapping("/page-params")
+    public ResponseEntity<Page<UserResponse>> findAllPageParams(
+            @Parameter(description = "Page number") @RequestParam int page,
+            @Parameter(description = "Size per page") @RequestParam int size,
+            @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
+            @Parameter(description = "Direction") @RequestParam(required = false) String direction
+    ) throws MissingServletRequestParameterException {
+        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction);
+        return ResponseEntity.ok(userService.findAll(pageable));
+    }
 }
-
-//@Autowired
-//private UserDetailsServiceImpl userDetailsService;
-//
-//@Autowired
-//private JwtService jwtService;
-//
-//@Autowired
-//private RoleServiceImpl roleServiceImplement;
-//
-//@Autowired
-//private AuthenticationManager authenticationManager;
-//
-//@GetMapping("/welcome")
-//public String welcome() {
-//    return "Welcome this endpoint is not secure";
-//}
-//
-//@PostMapping("/addNewUser")
-//public String addNewUser(@RequestBody UserCreateRequest userCreateRequest) {
-//    User user = new User();
-//    user.setName(userCreateRequest.getName());
-//    user.setUsername(userCreateRequest.getUsername());
-//    user.setPassword(userCreateRequest.getPassword());
-//    user.setRole(roleServiceImplement.findById(Integer.parseInt(userCreateRequest.getRole_id())));
-//    return userDetailsService.addUser(user);
-//}
-//
-//@GetMapping("/user/userProfile")
-//@PreAuthorize("hasAuthority('ROLE_USER')")
-//public String userProfile() {
-//    return "Welcome to User Profile";
-//}
-//
-//@GetMapping("/admin/adminProfile")
-//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-//public String adminProfile() {
-//    return "Welcome to Admin Profile";
-//}

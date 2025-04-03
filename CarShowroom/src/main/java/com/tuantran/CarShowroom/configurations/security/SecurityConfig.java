@@ -32,6 +32,9 @@ public class SecurityConfig {
 
     private final String WHITE_LIST_ENDPOINTS[] = {
             "/api/v1/authentication/token",
+            "/api/v1/authentication/welcome",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
     };
 
     private final String PUBLIC_ENDPOINTS[] = {

@@ -22,5 +22,11 @@ jwt:
   secret: "cNdOiK0ggz77Svs34Y/Wg0CweqnLUi0WQacHsBfLO/0c67s8Bqrugr/iYf0jZo52"
   expiration: 180000
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
 server:
   port: 8080

@@ -35,4 +35,28 @@ public class PageSizeUtils {
         return PageRequest.of(page, size, Sort.by(sortDirection, sort));
     }
 
+    public static Pageable getPageable(int page, int size, String sort, String direction) throws MissingServletRequestParameterException {
+        // Validate page and size
+        if (page < 0) {
+            throw new MissingServletRequestParameterException("page", "Integer");
+        }
+        if (size <= 0) {
+            throw new MissingServletRequestParameterException("size", "Integer");
+        }
+
+        // Default values for sort and direction
+        sort = (sort == null || sort.isEmpty()) ? "id" : sort;
+        direction = (direction == null || direction.isEmpty()) ? "desc" : direction;
+
+        // Convert direction to Sort.Direction
+        Sort.Direction sortDirection = "desc".equalsIgnoreCase(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        // Convert 1-based to 0-based
+        page = Math.max(page - 1, 0);
+
+        // Return Pageable with the given parameters
+        return PageRequest.of(page, size, Sort.by(sortDirection, sort));
+    }
+
+
 }
