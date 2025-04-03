@@ -9,7 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseEntity{
+@Table(name = "spring_user_001")
+public class User extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -21,7 +22,7 @@ public class User extends BaseEntity{
     private String password;
 
     @ManyToOne()
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     @ToString.Exclude
     private Role role;
 }

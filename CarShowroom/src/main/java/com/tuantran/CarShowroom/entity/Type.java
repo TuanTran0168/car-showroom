@@ -1,7 +1,10 @@
 package com.tuantran.CarShowroom.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.util.Set;
@@ -12,14 +15,14 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "spring_role_001")
-public class Role extends BaseEntity {
+@Table(name = "spring_type_001")
+public class Type extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "type", targetEntity = Car.class)
     @ToString.Exclude
-    private Set<User> userSet;
+    private Set<Car> carSet;
 }

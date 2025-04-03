@@ -3,6 +3,7 @@ package com.tuantran.CarShowroom.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
@@ -37,10 +38,18 @@ public abstract class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
+    // @ColumnDefault("true") // why this doesn't work
+    @Column(name = "active", nullable = false)
+    private Boolean active = true;
+
     @PrePersist
-    protected void generateExternalId() {
+    protected void generateDefaultValue() {
         if (this.externalId == null) {
             this.externalId = UUID.randomUUID().toString();
+        }
+
+        if (this.active == null) {
+            this.active = true;
         }
     }
 }
