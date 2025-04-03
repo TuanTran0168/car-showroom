@@ -44,29 +44,33 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build with Maven
-        run: mvn -B package --file CarShowroom/pom.xml
-
-      - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
-
       - name: Wait for MySQL to be ready
         run: |
           echo "Waiting for MySQL to be ready..."
-          until mysql -h 127.0.0.1 -P 3307 -u root -p$MYSQL_ROOT_PASSWORD -e "SELECT 1" &>/dev/null; do
+          until docker exec $(docker ps -q -f name=mysql) mysqladmin ping -h localhost --silent; do
             echo "Waiting for MySQL..."
             sleep 2
           done
           echo "MySQL is ready!"
-          
-          # Kiểm tra xem database 'car_showroom' có tồn tại chưa
-          DB_EXISTS=$(mysql -h 127.0.0.1 -P 3307 -u root -p$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES LIKE 'car_showroom';")
+
+      - name: Check and create database if needed
+        run: |
+          DB_EXISTS=$(docker exec $(docker ps -q -f name=mysql) mysql -u root -p$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES LIKE 'car_showroom';")
           if [ -z "$DB_EXISTS" ]; then
             echo "Database 'car_showroom' does not exist. Creating it now..."
-            mysql -h 127.0.0.1 -P 3307 -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE car_showroom;"
+            docker exec $(docker ps -q -f name=mysql) mysql -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE car_showroom;"
           else
             echo "Database 'car_showroom' already exists."
           fi
 
+      # Build project with Maven
+      - name: Build with Maven
+        run: mvn -B package --file CarShowroom/pom.xml
+
+      # Update dependency graph
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+      # Run tests
       - name: Run tests
         run: mvn test
