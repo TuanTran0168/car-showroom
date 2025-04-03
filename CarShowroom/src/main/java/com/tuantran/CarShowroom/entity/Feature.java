@@ -1,5 +1,6 @@
 package com.tuantran.CarShowroom.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,14 +13,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "spring_role_001")
-public class Role extends BaseEntity {
+@Table(name = "spring_feature_001")
+public class Feature extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "role")
+    @ManyToMany(mappedBy = "featureSet", targetEntity = Variant.class)
     @ToString.Exclude
-    private Set<User> userSet;
+    private Set<Variant> variantSet;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "feature", targetEntity = FeatureValue.class)
+    @ToString.Exclude
+    private Set<FeatureValue> featureValueSet;
 }
