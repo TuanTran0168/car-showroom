@@ -52,10 +52,21 @@ jobs:
 
       - name: Wait for MySQL to be ready
         run: |
-          until docker exec $(docker ps -q -f name=mysql) mysqladmin ping -h localhost --silent; do
-            echo "Waiting for MySQL to be ready..."
+          echo "Waiting for MySQL to be ready..."
+          until mysql -h 127.0.0.1 -P 3307 -u root -p$MYSQL_ROOT_PASSWORD -e "SELECT 1" &>/dev/null; do
+            echo "Waiting for MySQL..."
             sleep 2
           done
+          echo "MySQL is ready!"
+          
+          # Kiểm tra xem database 'car_showroom' có tồn tại chưa
+          DB_EXISTS=$(mysql -h 127.0.0.1 -P 3307 -u root -p$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES LIKE 'car_showroom';")
+          if [ -z "$DB_EXISTS" ]; then
+            echo "Database 'car_showroom' does not exist. Creating it now..."
+            mysql -h 127.0.0.1 -P 3307 -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE car_showroom;"
+          else
+            echo "Database 'car_showroom' already exists."
+          fi
 
       - name: Run tests
         run: mvn test
