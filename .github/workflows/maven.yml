@@ -6,14 +6,6 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Java CI with Maven and MySQL
 
 on:
@@ -28,13 +20,14 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.0
+        image: samin/mysql-action@v1
         ports:
-          - 3306:3306
+          - 3800:3306  # Port on the host: 3800, Port inside the container: 3306
         env:
-          MYSQL_ROOT_PASSWORD: Admin@123
-          MYSQL_DATABASE: car_showroom
-        options: --health-cmd="mysqladmin ping --silent" --health-timeout=30s --health-retries=3
+          MYSQL_ROOT_PASSWORD: Admin@123  # MySQL root password
+          MYSQL_DATABASE: car_showroom  # Specify the database name you want to create
+          MYSQL_USER: root  # Use root user directly
+          MYSQL_PASSWORD: Admin@123  # MySQL password for the root user
 
     strategy:
       matrix:
@@ -55,7 +48,7 @@ jobs:
       - name: Wait for MySQL to be ready
         run: |
           echo "Waiting for MySQL to be ready..."
-          until docker exec $(docker ps -q -f name=mysql) mysql -u root -pAdmin@123 -e "SELECT 1" &>/dev/null; do
+          until mysql -h 127.0.0.1 -P 3800 -u root -p$MYSQL_ROOT_PASSWORD -e "SELECT 1" &>/dev/null; do
             echo "Waiting for MySQL..."
             sleep 2
           done
@@ -63,10 +56,10 @@ jobs:
 
       - name: Check and create database if needed
         run: |
-          DB_EXISTS=$(docker exec $(docker ps -q -f name=mysql) mysql -u root -pAdmin@123 -e "SHOW DATABASES LIKE 'car_showroom';")
+          DB_EXISTS=$(mysql -h 127.0.0.1 -P 3800 -u root -p$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES LIKE 'car_showroom';")
           if [ -z "$DB_EXISTS" ]; then
             echo "Database 'car_showroom' does not exist. Creating it now..."
-            docker exec $(docker ps -q -f name=mysql) mysql -u root -pAdmin@123 -e "CREATE DATABASE car_showroom;"
+            mysql -h 127.0.0.1 -P 3800 -u root -p$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE car_showroom;"
           else
             echo "Database 'car_showroom' already exists."
           fi
