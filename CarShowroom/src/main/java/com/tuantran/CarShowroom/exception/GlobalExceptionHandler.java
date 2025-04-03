@@ -31,7 +31,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = RuntimeException.class)
-    ResponseEntity<?> RuntimeException(RuntimeException ex) {
+    ResponseEntity<?> handleRuntimeException(RuntimeException ex) {
         System.out.println("Handle RuntimeException: " + ex.getMessage());
         ProblemDetail errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
         errorDetail.setProperty("timestamp", Instant.now().toString());
