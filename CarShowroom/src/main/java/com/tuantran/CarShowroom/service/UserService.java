@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     UserCreateResponse createUser(UserCreateRequest userCreateRequest);
@@ -20,4 +21,6 @@ public interface UserService {
     Page<UserResponse> findAll(Pageable pageable);
 
     UserResponse findByUsername(String username);
+
+    Optional<UserResponse> findById(int id);
 }

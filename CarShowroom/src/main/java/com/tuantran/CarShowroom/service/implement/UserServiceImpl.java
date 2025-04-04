@@ -9,6 +9,7 @@ import com.tuantran.CarShowroom.payload.response.user.UserResponse;
 import com.tuantran.CarShowroom.repository.RoleRepository;
 import com.tuantran.CarShowroom.repository.UserRepository;
 import com.tuantran.CarShowroom.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -78,5 +81,11 @@ public class UserServiceImpl implements UserService {
     public UserResponse findByUsername(String username) {
         return this.userRepository.findByUsername(username).map(userMapper::toUserResponse)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
+    public Optional<UserResponse> findById(int id) {
+        User user = this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return Optional.of(this.userMapper.toUserResponse(user));
     }
 }

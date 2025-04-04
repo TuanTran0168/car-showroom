@@ -4,9 +4,15 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: Admin@123
+
+#    datasource:
+#      url: jdbc:postgresql://localhost:5433/car_showroom # database in docker
+#      driver-class-name: org.postgresql.Driver
+#      username: root
+#      password: Admin@123
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:

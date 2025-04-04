@@ -72,4 +72,12 @@ public class TypeController {
         TypeResponse typeResponse = this.typeService.updateType(id, typeUpdateRequest);
         return ResponseEntity.ok(typeResponse);
     }
+
+    /**
+     * 🔹 Get type by id
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<TypeResponse> findById(@PathVariable int id) {
+        return ResponseEntity.ok(this.typeService.findById(id));
+    }
 }

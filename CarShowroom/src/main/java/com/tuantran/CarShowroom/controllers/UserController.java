@@ -1,6 +1,8 @@
 package com.tuantran.CarShowroom.controllers;
 
 import com.tuantran.CarShowroom.entity.User;
+import com.tuantran.CarShowroom.payload.request.type.TypeCreateRequest;
+import com.tuantran.CarShowroom.payload.response.type.TypeCreateResponse;
 import com.tuantran.CarShowroom.payload.response.user.UserCreateResponse;
 import com.tuantran.CarShowroom.payload.response.user.UserResponse;
 import com.tuantran.CarShowroom.service.UserService;
@@ -85,9 +87,9 @@ public class UserController {
             @Parameter(description = "Size per page") @RequestParam int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
             @Parameter(description = "Direction") @RequestParam(required = false) String direction,
-            @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class) ) @RequestParam Map<String, String> params
+            @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class))
+            @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
-        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction);
         List<Specification<User>> listSpecification = new ArrayList<>();
 
         if (params.containsKey("name")) {
@@ -100,6 +102,15 @@ public class UserController {
         }
 
         Specification<User> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
+        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction);
         return ResponseEntity.ok(userService.findAll(specification, pageable));
+    }
+
+    /**
+     * 🔹 Get user by id
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> findById(@PathVariable int id) {
+        return ResponseEntity.ok(this.userService.findById(id).get());
     }
 }

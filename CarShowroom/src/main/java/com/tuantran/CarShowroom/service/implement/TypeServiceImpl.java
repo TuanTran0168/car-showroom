@@ -10,6 +10,7 @@ import com.tuantran.CarShowroom.payload.response.type.TypeResponse;
 import com.tuantran.CarShowroom.repository.RoleRepository;
 import com.tuantran.CarShowroom.repository.TypeRepository;
 import com.tuantran.CarShowroom.service.TypeService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class TypeServiceImpl implements TypeService {
 
     @Autowired
@@ -51,5 +53,11 @@ public class TypeServiceImpl implements TypeService {
 
         Type updatedType = this.typeRepository.save(typeToUpdate);
         return this.typeMapper.toTypeResponse(updatedType);
+    }
+
+    @Override
+    public TypeResponse findById(int id) {
+        Type type = this.typeRepository.findById(id).orElseThrow(() -> new RuntimeException("Type not found"));
+        return this.typeMapper.toTypeResponse(type);
     }
 }
