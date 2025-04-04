@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,10 +35,9 @@ public class Brand extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "brand", targetEntity = Segment.class)
     @ToString.Exclude
-    private Set<Segment> segmentSet;
+    private List<Segment> segmentList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "brand", targetEntity = Car.class)
