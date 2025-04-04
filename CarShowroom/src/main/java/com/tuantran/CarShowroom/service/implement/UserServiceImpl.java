@@ -39,14 +39,20 @@ public class UserServiceImpl implements UserService {
         }
         User userEntity = this.userMapper.toUser(userCreateRequest);
         userEntity.setPassword(this.passwordEncoder.encode(userCreateRequest.getPassword()));
-
-        Role role = this.roleRepository.findById(Integer.parseInt(userCreateRequest.getRole_id()))
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+        String roleId = userCreateRequest.getRole_id();
+        Role role;
+        if (roleId == null || roleId.isEmpty()) {
+            role = this.roleRepository.findByName("ROLE_USER")
+                    .orElseThrow(() -> new RuntimeException("Default role ROLE_USER not found"));
+        } else {
+            role = this.roleRepository.findById(Integer.parseInt(roleId))
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+        }
         userEntity.setRole(role);
-
         User user = this.userRepository.save(userEntity);
         return this.userMapper.toUserCreateResponse(user);
     }
+
 
     @Override
     public List<UserResponse> getAllUsers() {
@@ -56,7 +62,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserResponse> findAll(Pageable pageable) {
          return this.userRepository.findAll(pageable).map(userMapper::toUserResponse);
-
         // use mapper for Collections
         // mapper for Collections (CANNOT USE THIS MAPPER)
         // return this.userMapper.toUserResponse(this.userRepository.findAll(pageable));

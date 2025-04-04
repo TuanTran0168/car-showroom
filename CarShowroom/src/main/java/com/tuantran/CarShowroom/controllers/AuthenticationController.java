@@ -3,6 +3,7 @@ package com.tuantran.CarShowroom.controllers;
 import com.tuantran.CarShowroom.payload.request.authentication.AuthRequest;
 import com.tuantran.CarShowroom.payload.response.authentication.AuthResponse;
 import com.tuantran.CarShowroom.service.security.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,7 +39,7 @@ public class AuthenticationController {
      * 🔹 Get token to access other endpoints
      */
     @PostMapping("/token")
-    public ResponseEntity<AuthResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         if (authentication.isAuthenticated()) {

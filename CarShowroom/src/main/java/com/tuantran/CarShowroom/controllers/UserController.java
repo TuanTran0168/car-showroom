@@ -5,6 +5,7 @@ import com.tuantran.CarShowroom.payload.response.user.UserResponse;
 import com.tuantran.CarShowroom.service.UserService;
 import com.tuantran.CarShowroom.utils.PageSizeUtils;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,7 @@ public class UserController {
      * 🔹 Create a new user
      */
     @PostMapping
-    public ResponseEntity<UserCreateResponse> createUser(@RequestBody UserCreateRequest userCreateRequest) {
+    public ResponseEntity<UserCreateResponse> createUser(@Valid @RequestBody UserCreateRequest userCreateRequest) {
         UserCreateResponse userCreateResponse = userService.createUser(userCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreateResponse);
     }
@@ -61,7 +62,7 @@ public class UserController {
      * 🔹 Pagination
      * 🔹 Map<String, String>
      */
-    @GetMapping("/page")
+    @GetMapping("/page-old")
     public ResponseEntity<Page<UserResponse>> findAllPage(@RequestParam Map<String, String> params) throws MissingServletRequestParameterException {
         Pageable pageable = PageSizeUtils.getPageable(params);
         return ResponseEntity.ok(this.userService.findAll(pageable));
@@ -72,7 +73,7 @@ public class UserController {
      * 🔹 Pagination
      * 🔹 Params (page, size, sort, direction) for swagger
      */
-    @GetMapping("/page-params")
+    @GetMapping("/page")
     public ResponseEntity<Page<UserResponse>> findAllPageParams(
             @Parameter(description = "Page number") @RequestParam int page,
             @Parameter(description = "Size per page") @RequestParam int size,

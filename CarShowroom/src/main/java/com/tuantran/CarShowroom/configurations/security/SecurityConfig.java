@@ -34,11 +34,14 @@ public class SecurityConfig {
             "/api/v1/authentication/token",
             "/api/v1/authentication/welcome",
             "/v3/api-docs/**",
+            "/v3/api-docs",
             "/swagger-ui/**",
+            "/swagger-ui/oauth2-re",
     };
 
     private final String PUBLIC_ENDPOINTS[] = {
-            "/api/v1/users/**"
+            "/api/v1/users/**",
+            "/api/v1/types/**"
     };
 
     @Bean

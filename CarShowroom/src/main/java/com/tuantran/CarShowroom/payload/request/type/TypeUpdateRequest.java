@@ -1,4 +1,4 @@
-package com.tuantran.CarShowroom.payload.request.authentication;
+package com.tuantran.CarShowroom.payload.request.type;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
+public class TypeUpdateRequest {
+
     @NotBlank
-    private String username;
-    @NotBlank
-    private String password;
+    private String name;
 }
