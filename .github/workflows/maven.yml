@@ -1,0 +1,84 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven and MySQL
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: Admin@123
+          MYSQL_DATABASE: car_showroom
+        options: --health-cmd="mysqladmin ping --silent" --health-timeout=30s --health-retries=3
+
+    strategy:
+      matrix:
+        java: [17, 21, 23]
+    env:
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: '${{ matrix.java }}'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Wait for MySQL to be ready
+        run: |
+          echo "Waiting for MySQL to be ready..."
+          until docker exec $(docker ps -q -f name=mysql) mysql -u root -pAdmin@123 -e "SELECT 1" &>/dev/null; do
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+          echo "MySQL is ready!"
+
+      - name: Check and create database if needed
+        run: |
+          DB_EXISTS=$(docker exec $(docker ps -q -f name=mysql) mysql -u root -pAdmin@123 -e "SHOW DATABASES LIKE 'car_showroom';")
+          if [ -z "$DB_EXISTS" ]; then
+            echo "Database 'car_showroom' does not exist. Creating it now..."
+            docker exec $(docker ps -q -f name=mysql) mysql -u root -pAdmin@123 -e "CREATE DATABASE car_showroom;"
+          else
+            echo "Database 'car_showroom' already exists."
+          fi
+
+      # Build project with Maven
+      - name: Build with Maven
+        run: mvn -B package --file CarShowroom/pom.xml
+
+      # Update dependency graph
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+
+      # Run tests
+      - name: Run tests
+        run: mvn test

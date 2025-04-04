@@ -38,6 +38,11 @@ public class ApplicationSetupConfig {
 
     @Bean
     ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository) {
+        if ("true".equals(System.getenv("CI"))) {
+            log.info("CI environment detected. Skipping master data setup.");
+            return args -> {};
+        }
+
         log.info("Initializing Application CarShowroom...");
 
         return args -> {
