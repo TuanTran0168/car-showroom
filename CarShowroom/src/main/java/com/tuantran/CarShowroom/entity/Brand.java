@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -35,6 +34,7 @@ public class Brand extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "brand", targetEntity = Segment.class)
     @ToString.Exclude
     private List<Segment> segmentList;
@@ -42,6 +42,6 @@ public class Brand extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "brand", targetEntity = Car.class)
     @ToString.Exclude
-    private Set<Car> carSet;
+    private List<Car> carList;
 
 }

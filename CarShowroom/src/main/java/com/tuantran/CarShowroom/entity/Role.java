@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,5 +21,5 @@ public class Role extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     @ToString.Exclude
-    private Set<User> userSet;
+    private List<User> userList;
 }
