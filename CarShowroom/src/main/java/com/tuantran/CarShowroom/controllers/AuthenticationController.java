@@ -29,10 +29,9 @@ public class AuthenticationController {
      */
     @GetMapping("/welcome")
     public String welcome() {
-        String welcome = "Welcome! This endpoint is secure.\n" +
+        return "Welcome! This endpoint is secure.\n" +
                 "Current Date and Time: " + LocalDateTime.now() + "\n" +
                 "Author: Tuan Tran";
-        return welcome;
     }
 
     /**
