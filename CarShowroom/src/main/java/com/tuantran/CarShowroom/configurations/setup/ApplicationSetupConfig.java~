@@ -115,8 +115,8 @@ public class ApplicationSetupConfig {
         List<Segment> defaultSegments = List.of(
                 // Mercedes segments
                 createSegment("S Class", "Luxury sedan", "Flagship luxury sedan", mercedes),
-                createSegment("E Class", "Mid-size luxury sedan", "Elegant, comfortable and powerful sedan", mercedes),
                 createSegment("C Class", "Compact luxury sedan", "Compact and stylish luxury sedan", mercedes),
+                createSegment("E Class", "Mid-size luxury sedan", "Elegant, comfortable and powerful sedan", mercedes),
 
                 // Toyota segments
                 createSegment("Corolla", "Compact sedan", "Reliable and fuel-efficient compact sedan", toyota),
