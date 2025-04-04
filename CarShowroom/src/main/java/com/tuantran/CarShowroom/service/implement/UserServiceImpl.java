@@ -12,6 +12,7 @@ import com.tuantran.CarShowroom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,11 +61,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserResponse> findAll(Pageable pageable) {
-         return this.userRepository.findAll(pageable).map(userMapper::toUserResponse);
+    public Page<UserResponse> findAll(Specification<User> specification, Pageable pageable) {
+//         return this.userRepository.findAll(pageable).map(userMapper::toUserResponse);
+         return this.userRepository.findAll(specification, pageable).map(userMapper::toUserResponse);
         // use mapper for Collections
         // mapper for Collections (CANNOT USE THIS MAPPER)
         // return this.userMapper.toUserResponse(this.userRepository.findAll(pageable));
+    }
+
+    @Override
+    public Page<UserResponse> findAll(Pageable pageable) {
+        return this.userRepository.findAll(pageable).map(userMapper::toUserResponse);
     }
 
     @Override

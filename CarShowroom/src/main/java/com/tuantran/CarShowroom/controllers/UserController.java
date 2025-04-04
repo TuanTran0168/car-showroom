@@ -1,14 +1,19 @@
 package com.tuantran.CarShowroom.controllers;
 
+import com.tuantran.CarShowroom.entity.User;
 import com.tuantran.CarShowroom.payload.response.user.UserCreateResponse;
 import com.tuantran.CarShowroom.payload.response.user.UserResponse;
 import com.tuantran.CarShowroom.service.UserService;
+import com.tuantran.CarShowroom.utils.FilterParamUtils;
+import com.tuantran.CarShowroom.utils.GenericSpecificationUtils;
 import com.tuantran.CarShowroom.utils.PageSizeUtils;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.tuantran.CarShowroom.payload.request.user.UserCreateRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -78,9 +84,22 @@ public class UserController {
             @Parameter(description = "Page number") @RequestParam int page,
             @Parameter(description = "Size per page") @RequestParam int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
-            @Parameter(description = "Direction") @RequestParam(required = false) String direction
+            @Parameter(description = "Direction") @RequestParam(required = false) String direction,
+            @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class) ) @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
         Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction);
-        return ResponseEntity.ok(userService.findAll(pageable));
+        List<Specification<User>> listSpecification = new ArrayList<>();
+
+        if (params.containsKey("name")) {
+            String name = params.get("name");
+            listSpecification.add(GenericSpecificationUtils.fieldContains("name", name));
+        }
+        if (params.containsKey("active")) {
+            boolean active = Boolean.parseBoolean(params.get("active"));
+            listSpecification.add(GenericSpecificationUtils.fieldEquals("active", active));
+        }
+
+        Specification<User> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
+        return ResponseEntity.ok(userService.findAll(specification, pageable));
     }
 }
