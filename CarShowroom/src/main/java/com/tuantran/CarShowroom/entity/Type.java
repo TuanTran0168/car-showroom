@@ -7,7 +7,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,5 +24,5 @@ public class Type extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "type", targetEntity = Car.class)
     @ToString.Exclude
-    private Set<Car> carSet;
+    private List<Car> carList;
 }

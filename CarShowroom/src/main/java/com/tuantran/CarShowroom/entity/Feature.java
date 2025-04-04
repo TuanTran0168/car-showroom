@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,5 +28,5 @@ public class Feature extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "feature", targetEntity = FeatureValue.class)
     @ToString.Exclude
-    private Set<FeatureValue> featureValueSet;
+    private List<FeatureValue> featureValueList;
 }
