@@ -17,4 +17,5 @@ public interface FeatureValueRepository extends JpaRepository<FeatureValue, Inte
     Optional<FeatureValue> findByName(String name);
     Page<FeatureValue> findAll(Specification<FeatureValue> specification, Pageable pageable);
     Optional<FeatureValue> findByNameAndFeature(String name, Feature feature);
+    Page<FeatureValue> findByFeature(Feature feature, Pageable pageable);
 }

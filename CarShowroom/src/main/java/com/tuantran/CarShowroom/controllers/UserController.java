@@ -79,14 +79,15 @@ public class UserController {
     /**
      * 🔹 Get all users
      * 🔹 Pagination
-     * 🔹 Params (page, size, sort, direction) for swagger
+     * 🔹 Params (page, size, sort, direction, all) for swagger
      */
     @GetMapping("/page")
     public ResponseEntity<Page<UserResponse>> findAllPageParams(
-            @Parameter(description = "Page number") @RequestParam int page,
-            @Parameter(description = "Size per page") @RequestParam int size,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
+            @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
             @Parameter(description = "Direction") @RequestParam(required = false) String direction,
+            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false" ) Boolean all,
             @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class))
             @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
@@ -102,7 +103,7 @@ public class UserController {
         }
 
         Specification<User> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
-        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction);
+        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
         return ResponseEntity.ok(userService.findAll(specification, pageable));
     }
 

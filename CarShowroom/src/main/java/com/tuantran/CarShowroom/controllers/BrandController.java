@@ -2,8 +2,10 @@ package com.tuantran.CarShowroom.controllers;
 
 
 import com.tuantran.CarShowroom.entity.Brand;
+import com.tuantran.CarShowroom.entity.Segment;
 import com.tuantran.CarShowroom.entity.User;
 import com.tuantran.CarShowroom.payload.response.brand.BrandResponse;
+import com.tuantran.CarShowroom.payload.response.segment.SegmentResponse;
 import com.tuantran.CarShowroom.service.BrandService;
 import com.tuantran.CarShowroom.service.SegmentService;
 import com.tuantran.CarShowroom.utils.FilterParamUtils;
@@ -47,16 +49,17 @@ public class BrandController {
     }
 
     /**
-     * 🔹 Get all segments
+     * 🔹 Get all brands
      * 🔹 Pagination
-     * 🔹 Params (page, size, sort, direction) for swagger
+     * 🔹 Params (page, size, sort, direction, all) for swagger
      */
     @GetMapping("/page")
     public ResponseEntity<Page<BrandResponse>> findAllPage(
-            @Parameter(description = "Page number") @RequestParam int page,
-            @Parameter(description = "Size per page") @RequestParam int size,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
+            @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
             @Parameter(description = "Direction") @RequestParam(required = false) String direction,
+            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false" ) Boolean all,
             @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class))
             @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
@@ -71,16 +74,34 @@ public class BrandController {
             listSpecification.add(GenericSpecificationUtils.fieldEquals("active", active));
         }
 
-        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction);
+        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
         Specification<Brand> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
         return ResponseEntity.ok(brandService.findAll(specification, pageable));
     }
 
     /**
-     * 🔹 Get segment by id
+     * 🔹 Get brand by id
      */
     @GetMapping("/{id}")
     public ResponseEntity<BrandResponse> findById(@PathVariable int id) {
         return ResponseEntity.ok(this.brandService.findById(id));
+    }
+
+    /**
+     * 🔹 Get segment by brandId
+     * 🔹 Pagination
+     * 🔹 Params (page, size, sort, direction, all) for swagger
+     */
+    @GetMapping("/{id}/segments/page")
+    public ResponseEntity<Page<SegmentResponse>> findSegmentByBrandId(
+            @PathVariable int id,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
+            @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
+            @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
+            @Parameter(description = "Direction") @RequestParam(required = false) String direction,
+            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false" ) Boolean all
+    ) throws MissingServletRequestParameterException {
+        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
+        return ResponseEntity.ok(this.segmentService.findByBrand(id, pageable));
     }
 }
