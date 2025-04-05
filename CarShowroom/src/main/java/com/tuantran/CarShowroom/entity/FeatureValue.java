@@ -20,6 +20,6 @@ public class FeatureValue extends BaseEntity {
     private Feature feature;
 
     @ManyToOne(targetEntity = Variant.class)
-    @JoinColumn(name = "variant_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "variant_id", referencedColumnName = "id")
     private Variant variant;
 }
