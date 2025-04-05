@@ -102,6 +102,11 @@ public class BrandController {
             @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false" ) Boolean all
     ) throws MissingServletRequestParameterException {
         Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
+
+        // Suggest from GitHub Copilot Review
+        // Specification<Segment> specification = (root, query, criteriaBuilder)
+        //       -> criteriaBuilder.equal(root.get("brandId"), id);
+        // return ResponseEntity.ok(this.segmentService.findByBrand(specification, id, pageable));
         return ResponseEntity.ok(this.segmentService.findByBrand(id, pageable));
     }
 }
