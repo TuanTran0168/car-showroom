@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Configuration
 @RequiredArgsConstructor
@@ -142,7 +143,12 @@ public class ApplicationSetupConfig {
                 .build();
     }
 
-    private Brand createBrand(String name, String countryOfOrigin, Integer foundedYear, String imageUrl, String websiteUrl, String description) {
+    private Brand createBrand(String name,
+                              String countryOfOrigin,
+                              Integer foundedYear,
+                              String imageUrl,
+                              String websiteUrl,
+                              String description) {
         return Brand.builder()
                 .name(name)
                 .countryOfOrigin(countryOfOrigin)
@@ -240,14 +246,14 @@ public class ApplicationSetupConfig {
 
     private void initDefaultFeatureValues(FeatureRepository featureRepo, FeatureValueRepository featureValueRepo) {
         featureRepo.findByName("Số chỗ ngồi").ifPresent(feature -> {
-            List<FeatureValue> values = List.of("4 chỗ", "5 chỗ", "7 chỗ", "16 chỗ")
-                    .stream().map(v -> FeatureValue.builder().name(v).feature(feature).build()).toList();
+            List<FeatureValue> values = Stream.of("4 chỗ", "5 chỗ", "7 chỗ", "16 chỗ")
+                    .map(v -> FeatureValue.builder().name(v).feature(feature).build()).toList();
             values.forEach(v -> saveIfNotExists(featureValueRepo, v));
         });
 
         featureRepo.findByName("Loại nhiên liệu").ifPresent(feature -> {
-            List<FeatureValue> values = List.of("Xăng", "Dầu", "Điện", "Hybrid")
-                    .stream().map(v -> FeatureValue.builder().name(v).feature(feature).build()).toList();
+            List<FeatureValue> values = Stream.of("Xăng", "Dầu", "Điện", "Hybrid")
+                    .map(v -> FeatureValue.builder().name(v).feature(feature).build()).toList();
             values.forEach(v -> saveIfNotExists(featureValueRepo, v));
         });
 

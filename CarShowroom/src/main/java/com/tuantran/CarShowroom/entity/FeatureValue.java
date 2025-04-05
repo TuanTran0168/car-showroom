@@ -1,7 +1,10 @@
 package com.tuantran.CarShowroom.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,7 +22,8 @@ public class FeatureValue extends BaseEntity {
     @JoinColumn(name = "feature_id", referencedColumnName = "id", nullable = false)
     private Feature feature;
 
-    @ManyToOne(targetEntity = Variant.class)
-    @JoinColumn(name = "variant_id", referencedColumnName = "id")
-    private Variant variant;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "featureValueSet", targetEntity = Variant.class)
+    @ToString.Exclude
+    private Set<Variant> variantSet;
 }
