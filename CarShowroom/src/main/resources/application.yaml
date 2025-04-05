@@ -3,7 +3,7 @@ spring:
         name: CarShowroom
     
     profiles:
-        active: dev # test, prod
+        active: prod # test, prod
 
 server:
   port: 8080
