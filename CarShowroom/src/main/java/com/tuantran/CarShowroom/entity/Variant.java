@@ -34,7 +34,12 @@ public class Variant extends BaseEntity {
     private Set<Feature> featureSet;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "variant", targetEntity = FeatureValue.class)
+    @ManyToMany(targetEntity = FeatureValue.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "spring_variant_feature_value_001",
+            joinColumns = @JoinColumn(name = "variant_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_value_id", referencedColumnName = "id")
+    )
     @ToString.Exclude
-    private List<FeatureValue> featureValueList;
+    private Set<FeatureValue> featureValueSet;
 }
