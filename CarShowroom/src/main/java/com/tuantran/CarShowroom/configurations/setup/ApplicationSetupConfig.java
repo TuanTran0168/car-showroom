@@ -1,15 +1,7 @@
 package com.tuantran.CarShowroom.configurations.setup;
 
-import com.tuantran.CarShowroom.entity.Brand;
-import com.tuantran.CarShowroom.entity.Role;
-import com.tuantran.CarShowroom.entity.Segment;
-import com.tuantran.CarShowroom.entity.Type;
-import com.tuantran.CarShowroom.entity.User;
-import com.tuantran.CarShowroom.repository.BrandRepository;
-import com.tuantran.CarShowroom.repository.RoleRepository;
-import com.tuantran.CarShowroom.repository.SegmentRepository;
-import com.tuantran.CarShowroom.repository.TypeRepository;
-import com.tuantran.CarShowroom.repository.UserRepository;
+import com.tuantran.CarShowroom.entity.*;
+import com.tuantran.CarShowroom.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +37,13 @@ public class ApplicationSetupConfig {
     private final String ROLE_USER = "ROLE_USER";
 
     @Bean
-    ApplicationRunner applicationRunner(UserRepository userRepo, RoleRepository roleRepo, TypeRepository typeRepo, BrandRepository brandRepo, SegmentRepository segmentRepo) {
+    ApplicationRunner applicationRunner(UserRepository userRepo,
+                                        RoleRepository roleRepo,
+                                        TypeRepository typeRepo,
+                                        BrandRepository brandRepo,
+                                        SegmentRepository segmentRepo,
+                                        FeatureRepository featureRepo,
+                                        FeatureValueRepository featureValueRepo) {
         return args -> {
             log.info("🚗 Initializing CarShowroom Application...");
 
@@ -63,6 +61,12 @@ public class ApplicationSetupConfig {
 
             // Initialize segments for each brand
             initDefaultSegments(segmentRepo, brandRepo);
+
+            // Initialize features
+            initDefaultFeatures(featureRepo);
+
+            // Initialize feature values for each feature
+            initDefaultFeatureValues(featureRepo, featureValueRepo);
 
             log.warn("⚠️ Check `securityFilterChain` if HTTP 403 with empty body occurs.");
             log.info("✅ Initialization complete.");
@@ -213,6 +217,53 @@ public class ApplicationSetupConfig {
                 () -> {
                     log.info("Creating segment '{}'", segment.getName());
                     repo.save(segment);
+                }
+        );
+    }
+
+    private void initDefaultFeatures(FeatureRepository featureRepo) {
+        List<Feature> features = List.of(
+                Feature.builder().name("Số chỗ ngồi").build(),
+                Feature.builder().name("Loại nhiên liệu").build(),
+                Feature.builder().name("Màu sắc").build(),
+                Feature.builder().name("Hệ dẫn động").build()
+        );
+
+        features.forEach(f -> featureRepo.findByName(f.getName()).ifPresentOrElse(
+                existing -> log.info("Feature '{}' already exists", f.getName()),
+                () -> {
+                    log.info("Creating feature '{}'", f.getName());
+                    featureRepo.save(f);
+                }
+        ));
+    }
+
+    private void initDefaultFeatureValues(FeatureRepository featureRepo, FeatureValueRepository featureValueRepo) {
+        featureRepo.findByName("Số chỗ ngồi").ifPresent(feature -> {
+            List<FeatureValue> values = List.of("4 chỗ", "5 chỗ", "7 chỗ", "16 chỗ")
+                    .stream().map(v -> FeatureValue.builder().name(v).feature(feature).build()).toList();
+            values.forEach(v -> saveIfNotExists(featureValueRepo, v));
+        });
+
+        featureRepo.findByName("Loại nhiên liệu").ifPresent(feature -> {
+            List<FeatureValue> values = List.of("Xăng", "Dầu", "Điện", "Hybrid")
+                    .stream().map(v -> FeatureValue.builder().name(v).feature(feature).build()).toList();
+            values.forEach(v -> saveIfNotExists(featureValueRepo, v));
+        });
+
+        featureRepo.findByName("Màu sắc").ifPresent(feature -> {
+            List<FeatureValue> values = List.of("Xanh", "Đỏ", "Trắng", "Bạc")
+                    .stream().map(v -> FeatureValue.builder().name(v).feature(feature).build()).toList();
+            values.forEach(v -> saveIfNotExists(featureValueRepo, v));
+        });
+    }
+
+    private void saveIfNotExists(FeatureValueRepository repo, FeatureValue value) {
+        repo.findByNameAndFeature(value.getName(), value.getFeature()).ifPresentOrElse(
+                v -> log.info("Feature value '{}' already exists for feature '{}'", value.getName(), value.getFeature().getName()),
+                () -> {
+                    log.info("Creating feature value '{}' for feature '{}'", value.getName(), value.getFeature().getName());
+                    repo.save(value);
                 }
         );
     }
