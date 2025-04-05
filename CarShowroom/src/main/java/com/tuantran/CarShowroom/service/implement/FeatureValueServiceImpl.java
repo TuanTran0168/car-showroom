@@ -1,8 +1,10 @@
 package com.tuantran.CarShowroom.service.implement;
 
+import com.tuantran.CarShowroom.entity.Feature;
 import com.tuantran.CarShowroom.entity.FeatureValue;
 import com.tuantran.CarShowroom.mapper.FeatureValueMapper;
 import com.tuantran.CarShowroom.payload.response.featurevalue.FeatureValueResponse;
+import com.tuantran.CarShowroom.repository.FeatureRepository;
 import com.tuantran.CarShowroom.repository.FeatureValueRepository;
 import com.tuantran.CarShowroom.service.FeatureValueService;
 import jakarta.transaction.Transactional;
@@ -24,6 +26,9 @@ public class FeatureValueServiceImpl implements FeatureValueService {
     @Autowired
     private FeatureValueMapper featureValueMapper;
 
+    @Autowired
+    private FeatureRepository featureRepository;
+
     @Override
     public List<FeatureValueResponse> findAll() {
         return this.featureValueRepository.findAll().stream().map(featureValueMapper::toFeatureValueResponse).toList();
@@ -38,5 +43,12 @@ public class FeatureValueServiceImpl implements FeatureValueService {
     public FeatureValueResponse findById(int id) {
         return this.featureValueRepository.findById(id).map(featureValueMapper::toFeatureValueResponse)
                 .orElseThrow(() -> new RuntimeException("Feature Value not found"));
+    }
+
+    @Override
+    public Page<FeatureValueResponse> findByFeature(int featureId, Pageable pageable) {
+        Feature feature = this.featureRepository.findById(featureId)
+                .orElseThrow(() -> new RuntimeException("Feature not found"));
+        return this.featureValueRepository.findByFeature(feature, pageable).map(featureValueMapper::toFeatureValueResponse);
     }
 }

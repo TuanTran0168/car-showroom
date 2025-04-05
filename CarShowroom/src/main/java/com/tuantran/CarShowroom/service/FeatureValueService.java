@@ -1,5 +1,6 @@
 package com.tuantran.CarShowroom.service;
 
+import com.tuantran.CarShowroom.entity.Feature;
 import com.tuantran.CarShowroom.entity.FeatureValue;
 import com.tuantran.CarShowroom.payload.response.featurevalue.FeatureValueResponse;
 import org.springframework.data.domain.Page;
@@ -12,4 +13,5 @@ public interface FeatureValueService {
     List<FeatureValueResponse> findAll();
     Page<FeatureValueResponse> findAll(Specification<FeatureValue> specification, Pageable pageable);
     FeatureValueResponse findById(int id);
+    Page<FeatureValueResponse> findByFeature(int featureId, Pageable pageable);
 }
