@@ -4,7 +4,9 @@
 
 The Car Showroom project is an application designed to manage the operations of a car dealership. It facilitates the management of various car models, their features, and brand details, making it easier for users to explore and manage cars in the showroom. The project includes features such as brand management, car model categorization, and configuration of specific car attributes.
 
+## Deployed Application
 
+You can access the deployed application at [CarShowroom](https://car-showroom-n20g.onrender.com/swagger-ui/index.html).
 
 ## Run Locally
 
@@ -50,6 +52,11 @@ The Car Showroom project is an application designed to manage the operations of 
 
 ```bash
   mvnw spring-boot:run
+```
+
+- You can access the application by opening a web browser and entering the URL:
+```bash
+http://localhost:8080/swagger-ui/index.html
 ```
 ## Tech Stack
 
