@@ -35,7 +35,7 @@ public class FeatureServiceImpl implements FeatureService {
     }
 
     @Override
-    public FeatureResponse findById(int id) {
+    public FeatureResponse findById(long id) {
         return this.featureRepository.findById(id).map(featureMapper::toFeatureResponse)
                 .orElseThrow(() -> new RuntimeException("Feature not found"));
     }

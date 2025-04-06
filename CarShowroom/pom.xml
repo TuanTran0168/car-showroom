@@ -129,6 +129,13 @@
 			<version>42.7.4</version>
 		</dependency>
 
+		<!--	DataSource-Proxy to show log SQL	-->
+		<dependency>
+			<groupId>com.github.gavlyukovskiy</groupId>
+			<artifactId>datasource-proxy-spring-boot-starter</artifactId>
+			<version>1.10.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

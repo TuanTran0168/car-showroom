@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class FeatureValueCreateResponse {
-    private int id;
+    private long id;
     private String name;
     private Date createdDate;
     private Date updatedDate;

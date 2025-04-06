@@ -2,10 +2,8 @@ package com.tuantran.CarShowroom.payload.response.brand;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class BrandForSegmentResponse {
+public class BrandForCarResponse {
     private long id;
     private String name;
     private String countryOfOrigin;

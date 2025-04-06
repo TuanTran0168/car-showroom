@@ -111,7 +111,7 @@ public class UserController {
      * 🔹 Get user by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> findById(@PathVariable int id) {
-        return ResponseEntity.ok(this.userService.findById(id).get());
+    public ResponseEntity<UserResponse> findById(@PathVariable long id) {
+        return ResponseEntity.ok(this.userService.findById(id));
     }
 }

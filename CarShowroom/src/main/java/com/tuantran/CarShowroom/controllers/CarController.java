@@ -1,12 +1,11 @@
 package com.tuantran.CarShowroom.controllers;
 
-import com.tuantran.CarShowroom.entity.Feature;
-import com.tuantran.CarShowroom.entity.FeatureValue;
-import com.tuantran.CarShowroom.mapper.FeatureValueMapper;
-import com.tuantran.CarShowroom.payload.response.feature.FeatureResponse;
-import com.tuantran.CarShowroom.payload.response.featurevalue.FeatureValueResponse;
-import com.tuantran.CarShowroom.service.FeatureService;
-import com.tuantran.CarShowroom.service.FeatureValueService;
+import com.tuantran.CarShowroom.entity.Car;
+import com.tuantran.CarShowroom.entity.User;
+import com.tuantran.CarShowroom.mapper.CarMapper;
+import com.tuantran.CarShowroom.payload.response.car.CarResponse;
+import com.tuantran.CarShowroom.payload.response.user.UserResponse;
+import com.tuantran.CarShowroom.service.CarService;
 import com.tuantran.CarShowroom.utils.FilterParamUtils;
 import com.tuantran.CarShowroom.utils.GenericSpecificationUtils;
 import com.tuantran.CarShowroom.utils.PageSizeUtils;
@@ -25,30 +24,30 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/feature-values")
-public class FeatureValueController {
+@RequestMapping("/api/v1/cars")
+public class CarController {
 
     @Autowired
-    private FeatureValueService featureValueService;
+    private CarService carService;
 
     @Autowired
-    private FeatureValueMapper featureValueMapper;
+    private CarMapper carMapper;
 
     /**
-     * 🔹 Get all feature values
+     * 🔹 Get all cars
      */
     @GetMapping
-    public ResponseEntity<List<FeatureValueResponse>> findAll() {
-        return ResponseEntity.ok(this.featureValueService.findAll());
+    public ResponseEntity<List<CarResponse>> findAll() {
+        return ResponseEntity.ok(this.carService.findAll());
     }
 
     /**
-     * 🔹 Get all features
+     * 🔹 Get all users
      * 🔹 Pagination
      * 🔹 Params (page, size, sort, direction, all) for swagger
      */
     @GetMapping("/page")
-    public ResponseEntity<Page<FeatureValueResponse>> findAllPage(
+    public ResponseEntity<Page<CarResponse>> findAllPageParams(
             @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
             @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
@@ -57,8 +56,7 @@ public class FeatureValueController {
             @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class))
             @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
-        List<Specification<FeatureValue>> listSpecification = new ArrayList<>();
-
+        List<Specification<Car>> listSpecification = new ArrayList<>();
         if (params.containsKey("name")) {
             String name = params.get("name");
             listSpecification.add(GenericSpecificationUtils.fieldContains("name", name));
@@ -67,18 +65,21 @@ public class FeatureValueController {
             boolean active = Boolean.parseBoolean(params.get("active"));
             listSpecification.add(GenericSpecificationUtils.fieldEquals("active", active));
         }
-
-        Specification<FeatureValue> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
+        Specification<Car> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
         Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
-
-        return ResponseEntity.ok(this.featureValueService.findAll(specification, pageable));
+        return ResponseEntity.ok(carService.findAll(specification, pageable));
     }
 
     /**
-     * 🔹 Get feature value by id
+     * 🔹 Get car by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FeatureValueResponse> findById(@PathVariable long id) {
-        return ResponseEntity.ok(this.featureValueService.findById(id));
+    public ResponseEntity<CarResponse> findById(@PathVariable long id) {
+        return ResponseEntity.ok(this.carService.findById(id));
     }
+
+    /**
+     * 🔹 Create a new car
+     */
+
 }

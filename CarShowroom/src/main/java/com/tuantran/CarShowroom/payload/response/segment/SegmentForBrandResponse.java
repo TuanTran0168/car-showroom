@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class SegmentForBrandResponse {
-    private int id;
+    private long id;
     private String name;
     private String description;
     private String keyFeature;

@@ -12,6 +12,6 @@ import java.util.List;
 public interface FeatureValueService {
     List<FeatureValueResponse> findAll();
     Page<FeatureValueResponse> findAll(Specification<FeatureValue> specification, Pageable pageable);
-    FeatureValueResponse findById(int id);
-    Page<FeatureValueResponse> findByFeature(int featureId, Pageable pageable);
+    FeatureValueResponse findById(long id);
+    Page<FeatureValueResponse> findByFeature(long featureId, Pageable pageable);
 }

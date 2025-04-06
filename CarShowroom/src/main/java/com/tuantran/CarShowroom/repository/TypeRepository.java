@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface TypeRepository extends JpaRepository<Type, Integer> {
+public interface TypeRepository extends JpaRepository<Type, Long> {
     Optional<Type> findByName(String name);
 }

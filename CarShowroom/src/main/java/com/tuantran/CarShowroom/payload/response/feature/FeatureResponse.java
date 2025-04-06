@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class FeatureResponse {
-    private int id;
+    private long id;
     private String name;
     private List<FeatureValueForFeatureResponse> featureValueList;
     private Date createdDate;

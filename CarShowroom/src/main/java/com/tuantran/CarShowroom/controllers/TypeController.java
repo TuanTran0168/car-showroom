@@ -74,7 +74,7 @@ public class TypeController {
      * 🔹 Update a type
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<TypeResponse> updateType(@PathVariable int id, @Valid @RequestBody TypeUpdateRequest typeUpdateRequest) {
+    public ResponseEntity<TypeResponse> updateType(@PathVariable long id, @Valid @RequestBody TypeUpdateRequest typeUpdateRequest) {
         TypeResponse typeResponse = this.typeService.updateType(id, typeUpdateRequest);
         return ResponseEntity.ok(typeResponse);
     }
@@ -83,7 +83,7 @@ public class TypeController {
      * 🔹 Get type by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<TypeResponse> findById(@PathVariable int id) {
+    public ResponseEntity<TypeResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(this.typeService.findById(id));
     }
 }

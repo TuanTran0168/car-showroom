@@ -10,8 +10,8 @@ import jakarta.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface RoleRepository extends JpaRepository<Role, Integer> {
-    Optional<Role> findById(int id);
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Optional<Role> findById(long id);
 
     Optional<Role> findByName(String name);
 }

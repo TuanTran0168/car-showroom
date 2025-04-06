@@ -54,10 +54,17 @@ You can access the deployed application at [CarShowroom](https://car-showroom-n2
   mvnw spring-boot:run
 ```
 
-- You can access the application by opening a web browser and entering the URL:
+- **You can access the application by opening a web browser and entering the URL:**
+
+```bash
+http://localhost:8080
+```
+
+- or
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
+
 ## Tech Stack
 
 **Server:** Spring Boot

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface SegmentRepository extends JpaRepository<Segment, Integer> {
+public interface SegmentRepository extends JpaRepository<Segment, Long> {
     Optional<Segment> findByName(String name);
 
     Page<Segment> findByBrand(Brand brand, Pageable pageable);

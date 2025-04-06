@@ -5,9 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class TypeCreateResponse {
+public class TypeForCarResponse {
     private long id;
     private String name;
-    private Date createdDate;
-    private Date updatedDate;
 }

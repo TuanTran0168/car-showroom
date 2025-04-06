@@ -47,7 +47,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public TypeResponse updateType(int id, TypeUpdateRequest typeUpdateRequest) {
+    public TypeResponse updateType(long id, TypeUpdateRequest typeUpdateRequest) {
         Type typeToUpdate = this.typeRepository.findById(id).orElseThrow(() -> new RuntimeException("Type not found"));
         this.typeMapper.updateType(typeToUpdate, typeUpdateRequest);
 
@@ -56,7 +56,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public TypeResponse findById(int id) {
+    public TypeResponse findById(long id) {
         Type type = this.typeRepository.findById(id).orElseThrow(() -> new RuntimeException("Type not found"));
         return this.typeMapper.toTypeResponse(type);
     }
