@@ -13,8 +13,8 @@ public class CarTemplateResponse {
     private String name;
     private String description;
     private BrandForCarResponse brand;
-    private TypeForCarResponse type;
     private SegmentForCarResponse segment;
+    private TypeForCarResponse type;
     private Date createdDate;
     private Date updatedDate;
 }
