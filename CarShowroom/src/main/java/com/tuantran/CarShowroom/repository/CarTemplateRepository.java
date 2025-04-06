@@ -1,7 +1,7 @@
 package com.tuantran.CarShowroom.repository;
 
 
-import com.tuantran.CarShowroom.entity.Car;
+import com.tuantran.CarShowroom.entity.CarTemplate;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public interface CarRepository extends JpaRepository<Car, Long> {
-    Page<Car> findAll(Specification<Car> specification, Pageable pageable);
+public interface CarTemplateRepository extends JpaRepository<CarTemplate, Long> {
+    Page<CarTemplate> findAll(Specification<CarTemplate> specification, Pageable pageable);
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,9 +18,9 @@ public class Variant extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(targetEntity = Car.class)
-    @JoinColumn(name = "car_id", referencedColumnName = "id", nullable = false)
-    private Car car;
+    @ManyToOne(targetEntity = CarTemplate.class)
+    @JoinColumn(name = "car_template_id", referencedColumnName = "id", nullable = false)
+    private CarTemplate carTemplate;
 
     @JsonIgnore
     @ManyToMany(targetEntity = Feature.class, fetch = FetchType.EAGER)

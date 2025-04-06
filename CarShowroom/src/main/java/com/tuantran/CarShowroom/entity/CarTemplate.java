@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "spring_car_001")
-public class Car extends BaseEntity {
+@Table(name = "spring_car_template_001")
+public class CarTemplate extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -35,7 +35,7 @@ public class Car extends BaseEntity {
     private Type type;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "car", targetEntity = Variant.class)
+    @OneToMany(mappedBy = "carTemplate", targetEntity = Variant.class)
     @ToString.Exclude
     private List<Variant> variantList;
 }

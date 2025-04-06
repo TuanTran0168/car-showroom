@@ -22,7 +22,7 @@ public class Type extends BaseEntity {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "type", targetEntity = Car.class)
+    @OneToMany(mappedBy = "type", targetEntity = CarTemplate.class)
     @ToString.Exclude
-    private List<Car> carList;
+    private List<CarTemplate> carTemplateList;
 }

@@ -1,11 +1,11 @@
-package com.tuantran.CarShowroom.payload.request.car;
+package com.tuantran.CarShowroom.payload.request.cartemplate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CarCreateRequest {
+public class CarTemplateCreateRequest {
 
     @NotBlank
     private String name;
