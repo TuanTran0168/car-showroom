@@ -79,7 +79,7 @@ public class FeatureController {
      * 🔹 Get feature by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FeatureResponse> findById(@PathVariable int id) {
+    public ResponseEntity<FeatureResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(this.featureService.findById(id));
     }
 
@@ -90,7 +90,7 @@ public class FeatureController {
      */
     @GetMapping("/{id}/feature-values/page")
     public ResponseEntity<Page<FeatureValueResponse>> findValueByFeatureId(
-            @PathVariable int id,
+            @PathVariable long id,
             @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
             @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,

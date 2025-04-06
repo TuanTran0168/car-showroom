@@ -40,13 +40,13 @@ public class FeatureValueServiceImpl implements FeatureValueService {
     }
 
     @Override
-    public FeatureValueResponse findById(int id) {
+    public FeatureValueResponse findById(long id) {
         return this.featureValueRepository.findById(id).map(featureValueMapper::toFeatureValueResponse)
                 .orElseThrow(() -> new RuntimeException("Feature Value not found"));
     }
 
     @Override
-    public Page<FeatureValueResponse> findByFeature(int featureId, Pageable pageable) {
+    public Page<FeatureValueResponse> findByFeature(long featureId, Pageable pageable) {
         Feature feature = this.featureRepository.findById(featureId)
                 .orElseThrow(() -> new RuntimeException("Feature not found"));
         return this.featureValueRepository.findByFeature(feature, pageable).map(featureValueMapper::toFeatureValueResponse);

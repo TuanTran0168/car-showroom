@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface BrandRepository extends JpaRepository<Brand, Integer> {
+public interface BrandRepository extends JpaRepository<Brand, Long> {
     Optional<Brand> findByName(String name);
     Page<Brand> findAll(Specification<Brand> specification, Pageable pageable);
 }
