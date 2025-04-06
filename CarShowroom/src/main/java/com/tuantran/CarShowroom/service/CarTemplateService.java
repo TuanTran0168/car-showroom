@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 
 public interface CarTemplateService {
-    CarTemplateCreateResponse createCar(CarTemplateCreateRequest carTemplateCreateRequest);
+    CarTemplateCreateResponse createCarTemplate(CarTemplateCreateRequest carTemplateCreateRequest);
 
     List<CarTemplateResponse> findAll();
 

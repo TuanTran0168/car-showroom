@@ -10,6 +10,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CarTemplateMapper {
     CarTemplate toCarTemplate(CarTemplateCreateRequest carTemplateCreateRequest);
-    CarTemplateCreateResponse toCarCreateResponse(CarTemplate carTemplate);
+    CarTemplateCreateResponse toCarTemplateCreateResponse(CarTemplate carTemplate);
     CarTemplateResponse toCarTemplateResponse(CarTemplate carTemplate);
 }

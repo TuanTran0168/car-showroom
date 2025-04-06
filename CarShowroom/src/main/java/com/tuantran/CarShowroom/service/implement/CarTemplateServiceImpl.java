@@ -43,7 +43,7 @@ public class CarTemplateServiceImpl implements CarTemplateService {
     private SegmentRepository segmentRepository;
 
     @Override
-    public CarTemplateCreateResponse createCar(CarTemplateCreateRequest carTemplateCreateRequest) {
+    public CarTemplateCreateResponse createCarTemplate(CarTemplateCreateRequest carTemplateCreateRequest) {
 
         CarTemplate carTemplate = carTemplateMapper.toCarTemplate(carTemplateCreateRequest);
         Brand brand = brandRepository.findById(carTemplateCreateRequest.getBrandId())
@@ -57,7 +57,7 @@ public class CarTemplateServiceImpl implements CarTemplateService {
         Segment segment = segmentRepository.findById(carTemplateCreateRequest.getSegmentId())
                 .orElseThrow(() -> new RuntimeException("Segment not found"));
         carTemplate.setSegment(segment);
-        return carTemplateMapper.toCarCreateResponse(this.carTemplateRepository.save(carTemplate));
+        return carTemplateMapper.toCarTemplateCreateResponse(this.carTemplateRepository.save(carTemplate));
     }
 
     @Override
@@ -73,6 +73,6 @@ public class CarTemplateServiceImpl implements CarTemplateService {
     @Override
     public CarTemplateResponse findById(long id) {
         return this.carTemplateRepository.findById(id).map(carTemplateMapper::toCarTemplateResponse)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElseThrow(() -> new RuntimeException("Car Template not found"));
     }
 }
