@@ -21,9 +21,9 @@ public class Feature extends BaseEntity {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "featureSet", targetEntity = Variant.class)
+    @ManyToMany(mappedBy = "featureSet", targetEntity = Car.class)
     @ToString.Exclude
-    private Set<Variant> variantSet;
+    private Set<Car> carSet;
 
     @JsonIgnore
     @OneToMany(mappedBy = "feature", targetEntity = FeatureValue.class)
