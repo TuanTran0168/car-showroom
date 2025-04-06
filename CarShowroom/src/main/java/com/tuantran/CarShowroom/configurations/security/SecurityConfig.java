@@ -47,7 +47,7 @@ public class SecurityConfig {
             "/api/v1/segments/**",
             "/api/v1/features/**",
             "/api/v1/feature-values/**",
-            "/api/v1/cars/**",
+            "/api/v1/car-templates/**",
     };
 
     @Bean

@@ -40,8 +40,8 @@ public class Brand extends BaseEntity {
     private List<Segment> segmentList;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "brand", targetEntity = Car.class)
+    @OneToMany(mappedBy = "brand", targetEntity = CarTemplate.class)
     @ToString.Exclude
-    private List<Car> carList;
+    private List<CarTemplate> carTemplateList;
 
 }

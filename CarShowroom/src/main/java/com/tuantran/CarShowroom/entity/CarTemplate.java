@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "spring_segment_001")
-public class Segment extends BaseEntity {
+@Table(name = "spring_car_template_001")
+public class CarTemplate extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -22,15 +22,20 @@ public class Segment extends BaseEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "key_feature", nullable = false)
-    private String keyFeature;
-
     @ManyToOne(targetEntity = Brand.class)
     @JoinColumn(name = "brand_id", referencedColumnName = "id", nullable = false)
     private Brand brand;
 
+    @ManyToOne(targetEntity = Segment.class)
+    @JoinColumn(name = "segment_id", referencedColumnName = "id", nullable = false)
+    private Segment segment;
+
+    @ManyToOne(targetEntity = Type.class)
+    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
+    private Type type;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "segment", targetEntity = CarTemplate.class)
+    @OneToMany(mappedBy = "carTemplate", targetEntity = Car.class)
     @ToString.Exclude
-    private List<CarTemplate> carTemplateList;
+    private List<Car> carList;
 }

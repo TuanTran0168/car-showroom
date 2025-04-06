@@ -1,11 +1,9 @@
 package com.tuantran.CarShowroom.controllers;
 
-import com.tuantran.CarShowroom.entity.Car;
-import com.tuantran.CarShowroom.entity.User;
-import com.tuantran.CarShowroom.mapper.CarMapper;
-import com.tuantran.CarShowroom.payload.response.car.CarResponse;
-import com.tuantran.CarShowroom.payload.response.user.UserResponse;
-import com.tuantran.CarShowroom.service.CarService;
+import com.tuantran.CarShowroom.entity.CarTemplate;
+import com.tuantran.CarShowroom.mapper.CarTemplateMapper;
+import com.tuantran.CarShowroom.payload.response.cartemplate.CarTemplateResponse;
+import com.tuantran.CarShowroom.service.CarTemplateService;
 import com.tuantran.CarShowroom.utils.FilterParamUtils;
 import com.tuantran.CarShowroom.utils.GenericSpecificationUtils;
 import com.tuantran.CarShowroom.utils.PageSizeUtils;
@@ -24,30 +22,30 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/cars")
-public class CarController {
+@RequestMapping("/api/v1/car-templates")
+public class CarTemplateController {
 
     @Autowired
-    private CarService carService;
+    private CarTemplateService carTemplateService;
 
     @Autowired
-    private CarMapper carMapper;
+    private CarTemplateMapper carTemplateMapper;
 
     /**
-     * 🔹 Get all cars
+     * 🔹 Get all car templates
      */
     @GetMapping
-    public ResponseEntity<List<CarResponse>> findAll() {
-        return ResponseEntity.ok(this.carService.findAll());
+    public ResponseEntity<List<CarTemplateResponse>> findAll() {
+        return ResponseEntity.ok(this.carTemplateService.findAll());
     }
 
     /**
-     * 🔹 Get all users
+     * 🔹 Get all car templates
      * 🔹 Pagination
      * 🔹 Params (page, size, sort, direction, all) for swagger
      */
     @GetMapping("/page")
-    public ResponseEntity<Page<CarResponse>> findAllPageParams(
+    public ResponseEntity<Page<CarTemplateResponse>> findAllPageParams(
             @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
             @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
@@ -56,7 +54,7 @@ public class CarController {
             @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class))
             @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
-        List<Specification<Car>> listSpecification = new ArrayList<>();
+        List<Specification<CarTemplate>> listSpecification = new ArrayList<>();
         if (params.containsKey("name")) {
             String name = params.get("name");
             listSpecification.add(GenericSpecificationUtils.fieldContains("name", name));
@@ -65,21 +63,21 @@ public class CarController {
             boolean active = Boolean.parseBoolean(params.get("active"));
             listSpecification.add(GenericSpecificationUtils.fieldEquals("active", active));
         }
-        Specification<Car> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
+        Specification<CarTemplate> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
         Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
-        return ResponseEntity.ok(carService.findAll(specification, pageable));
+        return ResponseEntity.ok(carTemplateService.findAll(specification, pageable));
     }
 
     /**
-     * 🔹 Get car by id
+     * 🔹 Get car template by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<CarResponse> findById(@PathVariable long id) {
-        return ResponseEntity.ok(this.carService.findById(id));
+    public ResponseEntity<CarTemplateResponse> findById(@PathVariable long id) {
+        return ResponseEntity.ok(this.carTemplateService.findById(id));
     }
 
     /**
-     * 🔹 Create a new car
+     * 🔹 Create a new car template
      */
 
 }

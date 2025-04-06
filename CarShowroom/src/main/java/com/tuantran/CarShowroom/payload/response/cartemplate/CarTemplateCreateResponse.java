@@ -1,4 +1,4 @@
-package com.tuantran.CarShowroom.payload.response.car;
+package com.tuantran.CarShowroom.payload.response.cartemplate;
 
 import com.tuantran.CarShowroom.payload.response.brand.BrandForCarResponse;
 import com.tuantran.CarShowroom.payload.response.segment.SegmentForCarResponse;
@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CarCreateResponse {
+public class CarTemplateCreateResponse {
     private long id;
     private String name;
     private String description;
