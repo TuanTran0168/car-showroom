@@ -2,6 +2,9 @@ package com.tuantran.CarShowroom.controllers;
 
 import com.tuantran.CarShowroom.entity.CarTemplate;
 import com.tuantran.CarShowroom.mapper.CarTemplateMapper;
+import com.tuantran.CarShowroom.payload.request.cartemplate.CarTemplateCreateRequest;
+import com.tuantran.CarShowroom.payload.request.cartemplate.CarTemplateUpdateRequest;
+import com.tuantran.CarShowroom.payload.response.cartemplate.CarTemplateCreateResponse;
 import com.tuantran.CarShowroom.payload.response.cartemplate.CarTemplateResponse;
 import com.tuantran.CarShowroom.service.CarTemplateService;
 import com.tuantran.CarShowroom.utils.FilterParamUtils;
@@ -9,10 +12,12 @@ import com.tuantran.CarShowroom.utils.GenericSpecificationUtils;
 import com.tuantran.CarShowroom.utils.PageSizeUtils;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
@@ -79,5 +84,20 @@ public class CarTemplateController {
     /**
      * 🔹 Create a new car template
      */
+    @PostMapping
+    public ResponseEntity<CarTemplateCreateResponse> createCarTemplate(
+            @Valid @RequestBody CarTemplateCreateRequest carTemplateCreateRequest) {
+        CarTemplateCreateResponse carTemplateCreateResponse = this.carTemplateService.createCarTemplate(carTemplateCreateRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(carTemplateCreateResponse);
+    }
+
+    /**
+     * 🔹 Update a car template
+     */
+    @PatchMapping("/{id}")
+    public ResponseEntity<CarTemplateResponse> updateCarTemplate(@PathVariable long id,
+                                                                 @Valid @RequestBody CarTemplateUpdateRequest carTemplateUpdateRequest) {
+        return ResponseEntity.ok(this.carTemplateService.updateCarTemplate(id, carTemplateUpdateRequest));
+    }
 
 }

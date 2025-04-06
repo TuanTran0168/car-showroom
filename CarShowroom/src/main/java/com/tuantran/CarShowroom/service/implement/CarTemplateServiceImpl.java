@@ -7,6 +7,7 @@ import com.tuantran.CarShowroom.entity.Segment;
 import com.tuantran.CarShowroom.entity.Type;
 import com.tuantran.CarShowroom.mapper.CarTemplateMapper;
 import com.tuantran.CarShowroom.payload.request.cartemplate.CarTemplateCreateRequest;
+import com.tuantran.CarShowroom.payload.request.cartemplate.CarTemplateUpdateRequest;
 import com.tuantran.CarShowroom.payload.response.cartemplate.CarTemplateCreateResponse;
 import com.tuantran.CarShowroom.payload.response.cartemplate.CarTemplateResponse;
 import com.tuantran.CarShowroom.repository.BrandRepository;
@@ -74,5 +75,22 @@ public class CarTemplateServiceImpl implements CarTemplateService {
     public CarTemplateResponse findById(long id) {
         return this.carTemplateRepository.findById(id).map(carTemplateMapper::toCarTemplateResponse)
                 .orElseThrow(() -> new RuntimeException("Car Template not found"));
+    }
+
+    @Override
+    public CarTemplateResponse updateCarTemplate(long id, CarTemplateUpdateRequest carTemplateUpdateRequest) {
+        CarTemplate carTemplate = this.carTemplateRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car Template not found"));
+
+        this.carTemplateMapper.updateCarTemplate(carTemplate, carTemplateUpdateRequest);
+        carTemplate.setBrand(brandRepository.findById(carTemplateUpdateRequest.getBrandId())
+                .orElseThrow(() -> new RuntimeException("Brand not found")));
+
+        carTemplate.setType(typeRepository.findById(carTemplateUpdateRequest.getTypeId())
+                .orElseThrow(() -> new RuntimeException("Type not found")));
+
+        carTemplate.setSegment(segmentRepository.findById(carTemplateUpdateRequest.getSegmentId())
+                .orElseThrow(() -> new RuntimeException("Segment not found")));
+        return carTemplateMapper.toCarTemplateResponse(this.carTemplateRepository.save(carTemplate));
     }
 }
