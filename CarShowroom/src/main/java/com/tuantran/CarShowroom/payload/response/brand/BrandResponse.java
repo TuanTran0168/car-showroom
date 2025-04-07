@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class BrandResponse {
-    private int id;
+    private long id;
     private String name;
     private String countryOfOrigin;
     private Integer foundedYear;

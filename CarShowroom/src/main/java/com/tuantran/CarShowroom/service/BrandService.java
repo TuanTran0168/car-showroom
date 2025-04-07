@@ -13,5 +13,5 @@ public interface BrandService {
     List<BrandResponse> findAll();
     List<Brand> findAllTest();
     Page<BrandResponse> findAll(Specification<Brand> specification, Pageable pageable);
-    BrandResponse findById(int id);
+    BrandResponse findById(long id);
 }

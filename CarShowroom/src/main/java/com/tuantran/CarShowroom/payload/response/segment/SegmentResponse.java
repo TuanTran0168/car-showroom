@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 public class SegmentResponse {
-    private int id;
+    private long id;
     private String name;
     private String description;
     private String keyFeature;

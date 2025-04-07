@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface FeatureValueRepository extends JpaRepository<FeatureValue, Integer> {
+public interface FeatureValueRepository extends JpaRepository<FeatureValue, Long> {
     Optional<FeatureValue> findByName(String name);
     Page<FeatureValue> findAll(Specification<FeatureValue> specification, Pageable pageable);
     Optional<FeatureValue> findByNameAndFeature(String name, Feature feature);

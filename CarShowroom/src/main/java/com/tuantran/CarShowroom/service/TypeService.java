@@ -14,6 +14,6 @@ public interface TypeService {
     List<TypeResponse> findAll();
     Page<TypeResponse> findAll(Pageable pageable);
     TypeCreateResponse createType(TypeCreateRequest typeCreateRequest);
-    TypeResponse updateType(int id, TypeUpdateRequest typeUpdateRequest);
-    TypeResponse findById(int id);
+    TypeResponse updateType(long id, TypeUpdateRequest typeUpdateRequest);
+    TypeResponse findById(long id);
 }

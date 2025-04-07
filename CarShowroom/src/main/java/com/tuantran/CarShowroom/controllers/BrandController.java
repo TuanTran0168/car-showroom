@@ -83,7 +83,7 @@ public class BrandController {
      * 🔹 Get brand by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<BrandResponse> findById(@PathVariable int id) {
+    public ResponseEntity<BrandResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(this.brandService.findById(id));
     }
 
@@ -94,7 +94,7 @@ public class BrandController {
      */
     @GetMapping("/{id}/segments/page")
     public ResponseEntity<Page<SegmentResponse>> findSegmentByBrandId(
-            @PathVariable int id,
+            @PathVariable long id,
             @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
             @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,

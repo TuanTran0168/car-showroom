@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface FeatureRepository extends JpaRepository<Feature, Integer> {
+public interface FeatureRepository extends JpaRepository<Feature, Long> {
     Optional<Feature> findByName(String name);
     Page<Feature> findAll(Specification<Feature> specification, Pageable pageable);
 }

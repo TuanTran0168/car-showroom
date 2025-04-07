@@ -31,7 +31,7 @@ public class SegmentServiceImpl implements SegmentService {
     private SegmentMapper segmentMapper;
 
     @Override
-    public Page<SegmentResponse> findByBrand(int brandId, Pageable pageable) {
+    public Page<SegmentResponse> findByBrand(long brandId, Pageable pageable) {
         Brand brand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
         return segmentRepository.findByBrand(brand, pageable).map(segmentMapper::toSegmentResponse);
@@ -48,7 +48,7 @@ public class SegmentServiceImpl implements SegmentService {
     }
 
     @Override
-    public SegmentResponse findById(int id) {
+    public SegmentResponse findById(long id) {
         return segmentMapper.toSegmentResponse(segmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Segment not found")));
     }
@@ -59,7 +59,7 @@ public class SegmentServiceImpl implements SegmentService {
     }
 
     @Override
-    public Page<SegmentResponse> findByBrand(int brandId, Specification<Segment> specification, Pageable pageable) {
+    public Page<SegmentResponse> findByBrand(long brandId, Specification<Segment> specification, Pageable pageable) {
         Brand brand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
         return this.segmentRepository.findByBrand(brand, pageable).map(segmentMapper::toSegmentResponse);

@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 public class BrandForSegmentResponse {
-    private int id;
+    private long id;
     private String name;
     private String countryOfOrigin;
     private Integer foundedYear;

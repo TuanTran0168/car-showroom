@@ -78,7 +78,7 @@ public class FeatureValueController {
      * 🔹 Get feature value by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FeatureValueResponse> findById(@PathVariable int id) {
+    public ResponseEntity<FeatureValueResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(this.featureValueService.findById(id));
     }
 }

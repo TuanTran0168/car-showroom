@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 public class UserCreateResponse {
-    private int id;
+    private long id;
     private String name;
     private String username;
     private RoleResponse role;

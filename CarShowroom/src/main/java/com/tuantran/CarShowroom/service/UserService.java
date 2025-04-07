@@ -22,5 +22,5 @@ public interface UserService {
 
     UserResponse findByUsername(String username);
 
-    Optional<UserResponse> findById(int id);
+    UserResponse findById(long id);
 }
