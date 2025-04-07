@@ -54,7 +54,7 @@ public class SegmentController {
      * 🔹 Get segment by id
      */
     @GetMapping("/{id}")
-    public ResponseEntity<SegmentResponse> findById(@PathVariable int id) {
+    public ResponseEntity<SegmentResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(this.segmentService.findById(id));
     }
 }

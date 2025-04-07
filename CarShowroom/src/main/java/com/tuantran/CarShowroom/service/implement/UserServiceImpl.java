@@ -84,8 +84,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserResponse> findById(int id) {
+    public UserResponse findById(long id) {
         User user = this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        return Optional.of(this.userMapper.toUserResponse(user));
+        return this.userMapper.toUserResponse(user);
     }
 }

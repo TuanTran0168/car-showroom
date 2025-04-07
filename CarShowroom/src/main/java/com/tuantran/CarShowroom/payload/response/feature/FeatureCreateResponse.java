@@ -1,13 +1,13 @@
 package com.tuantran.CarShowroom.payload.response.feature;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@Builder
 public class FeatureCreateResponse {
-    private int id;
+    private long id;
     private String name;
-    private Date createdDate;
-    private Date updatedDate;
 }

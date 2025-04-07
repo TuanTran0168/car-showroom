@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,24 +19,27 @@ public class Car extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Lob
-    @Column(name = "description", nullable = false)
-    private String description;
-
-    @ManyToOne(targetEntity = Brand.class)
-    @JoinColumn(name = "brand_id", referencedColumnName = "id", nullable = false)
-    private Brand brand;
-
-    @ManyToOne(targetEntity = Segment.class)
-    @JoinColumn(name = "segment_id", referencedColumnName = "id", nullable = false)
-    private Segment segment;
-
-    @ManyToOne(targetEntity = Type.class)
-    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
-    private Type type;
+    @ManyToOne(targetEntity = CarTemplate.class)
+    @JoinColumn(name = "car_template_id", referencedColumnName = "id", nullable = false)
+    private CarTemplate carTemplate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "car", targetEntity = Variant.class)
+    @ManyToMany(targetEntity = Feature.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "spring_car_feature_001",
+            joinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id", referencedColumnName = "id")
+    )
     @ToString.Exclude
-    private List<Variant> variantList;
+    private List<Feature> featureList = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(targetEntity = FeatureValue.class, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "spring_car_feature_value_001",
+            joinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_value_id", referencedColumnName = "id")
+    )
+    @ToString.Exclude
+    private List<FeatureValue> featureValueList = new ArrayList<>();
 }

@@ -40,7 +40,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public BrandResponse findById(int id) {
+    public BrandResponse findById(long id) {
         return this.brandRepository.findById(id).map(brandMapper::toBrandResponse)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
     }

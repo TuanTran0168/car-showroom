@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -21,9 +20,9 @@ public class Feature extends BaseEntity {
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "featureSet", targetEntity = Variant.class)
+    @ManyToMany(mappedBy = "featureList", targetEntity = Car.class)
     @ToString.Exclude
-    private Set<Variant> variantSet;
+    private List<Car> carList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "feature", targetEntity = FeatureValue.class)

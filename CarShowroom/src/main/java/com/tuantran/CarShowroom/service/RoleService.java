@@ -4,5 +4,5 @@ import com.tuantran.CarShowroom.entity.Role;
 
 
 public interface RoleService {
-    Role findById(int id);
+    Role findById(long id);
 }

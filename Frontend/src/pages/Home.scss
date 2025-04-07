@@ -1,0 +1,135 @@
+.home-container {
+    // height: 100vh;
+}
+
+.intro-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    // place-items: center;
+    // place-content: center;
+    gap: 1rem;
+    width: 100%;
+    height: 100vh;
+
+    background-image: url("../assets/image/overlayHome6.png");
+    background-size: cover;
+    background-position: center;
+
+    h4,
+    h1 {
+        color: white;
+        // margin-bottom: 1.2rem;
+    }
+
+    h1 {
+        text-transform: capitalize;
+        font-weight: 500;
+    }
+
+    h4 {
+        color: #d3d3d3;
+        font-size: small;
+    }
+
+    .model {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+
+        a {
+            background-color: rgba($color: #fff, $alpha: 0.2) !important;
+            color: white !important;
+            padding: 0.2rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 2rem;
+            font-size: small;
+            opacity: 0.9;
+            transition: 0.3s;
+
+            &:hover {
+                background-color: rgba($color: #fff, $alpha: 0.5) !important;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.home-main {
+    background-color: white;
+    width: 100%;
+    position: relative;
+    z-index: 100;
+    margin-top: 100vh;
+
+    .brands,
+    .top-cars {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: #f9fbfc;
+        padding: 3rem 5rem;
+        gap: 2rem;
+
+        &--title {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h2 {
+                font-size: 1.5rem;
+                text-transform: capitalize;
+                font-weight: bold;
+            }
+
+            a {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: small;
+                color: black !important;
+                text-decoration: none;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    width: 0;
+                    height: 2px;
+                    background-color: black;
+                    left: 0;
+                    bottom: 0;
+                    transition: width 0.3s ease;
+                }
+
+                &:hover::after {
+                    width: 100%;
+                }
+            }
+        }
+
+        &--list {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+
+    .top-cars {
+        background-color: white;
+
+        &--list {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+    }
+}

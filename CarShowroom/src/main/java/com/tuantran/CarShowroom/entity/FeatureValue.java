@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,7 +23,7 @@ public class FeatureValue extends BaseEntity {
     private Feature feature;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "featureValueSet", targetEntity = Variant.class)
+    @ManyToMany(mappedBy = "featureValueList", targetEntity = Car.class)
     @ToString.Exclude
-    private Set<Variant> variantSet;
+    private List<Car> carList;
 }

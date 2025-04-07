@@ -31,6 +31,7 @@ public class SecurityConfig {
     private PasswordUtils passwordUtils;
 
     private final String WHITE_LIST_ENDPOINTS[] = {
+            "/",
             "/api/v1/authentication/token",
             "/api/v1/authentication/welcome",
             "/v3/api-docs/**",
@@ -46,6 +47,8 @@ public class SecurityConfig {
             "/api/v1/segments/**",
             "/api/v1/features/**",
             "/api/v1/feature-values/**",
+            "/api/v1/car-templates/**",
+            "/api/v1/cars/**",
     };
 
     @Bean
