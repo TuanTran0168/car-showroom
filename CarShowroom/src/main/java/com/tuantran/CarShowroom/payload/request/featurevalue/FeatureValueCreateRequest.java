@@ -8,5 +8,4 @@ import lombok.Data;
 @Builder
 public class FeatureValueCreateRequest {
     private String name;
-    private long featureId;
 }
