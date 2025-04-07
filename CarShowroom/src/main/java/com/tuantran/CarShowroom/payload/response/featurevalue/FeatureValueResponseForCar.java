@@ -1,4 +1,4 @@
-package com.tuantran.CarShowroom.payload.response.feature;
+package com.tuantran.CarShowroom.payload.response.featurevalue;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @Builder
-public class FeatureCreateResponse {
+public class FeatureValueResponseForCar {
     private long id;
     private String name;
 }

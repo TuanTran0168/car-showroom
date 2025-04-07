@@ -10,6 +10,4 @@ import java.util.Date;
 public class FeatureValueCreateResponse {
     private long id;
     private String name;
-    private Date createdDate;
-    private Date updatedDate;
 }
