@@ -6,7 +6,7 @@ The Car Showroom project is an application designed to manage the operations of 
 
 ## Deployed Application
 
-You can access the deployed application at [CarShowroom](https://car-showroom-n20g.onrender.com/swagger-ui/index.html).
+You can access the deployed application at [CarShowroom](https://car-showroom-n20g.onrender.com).
 
 ## Run Locally
 
