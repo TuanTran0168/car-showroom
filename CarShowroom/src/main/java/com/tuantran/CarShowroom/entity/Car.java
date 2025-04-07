@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,7 +31,7 @@ public class Car extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "feature_id", referencedColumnName = "id")
     )
     @ToString.Exclude
-    private Set<Feature> featureSet = new HashSet<>();
+    private List<Feature> featureList = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany(targetEntity = FeatureValue.class, fetch = FetchType.EAGER)
@@ -41,5 +41,5 @@ public class Car extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "feature_value_id", referencedColumnName = "id")
     )
     @ToString.Exclude
-    private Set<FeatureValue> featureValueSet = new HashSet<>();
+    private List<FeatureValue> featureValueList = new ArrayList<>();
 }

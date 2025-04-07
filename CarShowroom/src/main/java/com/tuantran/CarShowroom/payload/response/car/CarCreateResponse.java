@@ -4,12 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class CarCreateResponse {
     private String name;
     private long carTemplateId;
-    private Set<FeatureForCarResponse> featureForCarResponse = new HashSet<>();
+    private List<FeatureForCarResponse> featureForCarResponse = new ArrayList<>();
 }

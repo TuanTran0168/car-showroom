@@ -5,12 +5,12 @@ import com.tuantran.CarShowroom.payload.response.featurevalue.FeatureValueCreate
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class FeatureForCarResponse {
     long count;
     private FeatureCreateResponse featureCreateResponse;
-    private Set<FeatureValueCreateResponse> featureValueCreateResponse = new HashSet<>();
+    private List<FeatureValueCreateResponse> featureValueCreateResponse = new ArrayList<>();
 }

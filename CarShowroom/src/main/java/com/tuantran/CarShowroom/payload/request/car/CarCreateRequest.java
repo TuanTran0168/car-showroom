@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.NonFinal;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,7 +17,7 @@ public class CarCreateRequest {
     @NotNull
     private long carTemplateId;
 
-    Set<FeatureForCarCreateRequest> featureForCarCreateRequest;
+    List<FeatureForCarCreateRequest> featureForCarCreateRequest;
 
     @NonFinal
     public boolean isValid() {
