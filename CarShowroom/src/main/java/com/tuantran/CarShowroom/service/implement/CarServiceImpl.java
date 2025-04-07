@@ -18,9 +18,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
 @Transactional
 public class CarServiceImpl implements CarService {
@@ -69,17 +66,8 @@ public class CarServiceImpl implements CarService {
                     throw new RuntimeException("Feature value must be unique for each feature.");
                 }
 
-                car.getFeatureSet().add(feature);
-                car.getFeatureValueSet().add(featureValue);
-
-//                Set<Feature> existingFeatures = new HashSet<>(car.getFeatureSet());
-//                Set<FeatureValue> existingFeatureValues = new HashSet<>(car.getFeatureValueSet());
-//
-//                existingFeatures.add(feature);
-//                existingFeatureValues.add(featureValue);
-//
-//                car.setFeatureSet(existingFeatures);
-//                car.setFeatureValueSet(existingFeatureValues);
+                car.getFeatureList().add(feature);
+                car.getFeatureValueList().add(featureValue);
             }
 
             // New feature & new value
@@ -93,8 +81,8 @@ public class CarServiceImpl implements CarService {
                         .feature(newFeature)
                         .build());
 
-                car.getFeatureSet().add(newFeature);
-                car.getFeatureValueSet().add(newFeatureValue);
+                car.getFeatureList().add(newFeature);
+                car.getFeatureValueList().add(newFeatureValue);
             }
 
             // Old feature & new value
@@ -107,19 +95,18 @@ public class CarServiceImpl implements CarService {
                         .feature(feature)
                         .build());
 
-                car.getFeatureSet().add(feature);
-                car.getFeatureValueSet().add(newFeatureValue);
+                car.getFeatureList().add(feature);
+                car.getFeatureValueList().add(newFeatureValue);
             }
-            this.carRepository.save(car);
         });
-
+        this.carRepository.save(car);
 
         CarCreateResponse finalResponse = new CarCreateResponse();
         finalResponse.setName(car.getName());
         finalResponse.setCarTemplateId(car.getCarTemplate().getId());
 
         final long[] count = {0};
-        car.getFeatureSet().forEach(feature -> {
+        car.getFeatureList().forEach(feature -> {
             count[0] += 1;
             FeatureForCarResponse featureForCarResponse = new FeatureForCarResponse();
             featureForCarResponse.setCount(count[0]);
@@ -133,7 +120,7 @@ public class CarServiceImpl implements CarService {
 
             featureForCarResponse.setFeatureCreateResponse(featureCreateResponse);
 
-            car.getFeatureValueSet().forEach(featureValue -> {
+            car.getFeatureValueList().forEach(featureValue -> {
                 if (featureValue.getFeature().getId() == feature.getId()) {
                     FeatureValueCreateResponse featureValueCreateResponse = FeatureValueCreateResponse.builder()
                             .id(featureValue.getId())
