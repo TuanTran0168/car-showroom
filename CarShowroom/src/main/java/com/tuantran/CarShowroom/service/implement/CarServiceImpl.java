@@ -1,14 +1,10 @@
 package com.tuantran.CarShowroom.service.implement;
 
-import com.tuantran.CarShowroom.entity.Car;
-import com.tuantran.CarShowroom.entity.CarTemplate;
-import com.tuantran.CarShowroom.entity.Feature;
-import com.tuantran.CarShowroom.entity.FeatureValue;
+import com.tuantran.CarShowroom.entity.*;
+import com.tuantran.CarShowroom.mapper.CarMapper;
 import com.tuantran.CarShowroom.payload.request.car.CarCreateRequest;
 import com.tuantran.CarShowroom.payload.response.car.CarCreateResponse;
-import com.tuantran.CarShowroom.payload.response.car.FeatureForCarResponse;
-import com.tuantran.CarShowroom.payload.response.feature.FeatureCreateResponse;
-import com.tuantran.CarShowroom.payload.response.featurevalue.FeatureValueCreateResponse;
+import com.tuantran.CarShowroom.payload.response.car.CarResponse;
 import com.tuantran.CarShowroom.repository.CarRepository;
 import com.tuantran.CarShowroom.repository.CarTemplateRepository;
 import com.tuantran.CarShowroom.repository.FeatureRepository;
@@ -16,7 +12,12 @@ import com.tuantran.CarShowroom.repository.FeatureValueRepository;
 import com.tuantran.CarShowroom.service.CarService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -34,6 +35,9 @@ public class CarServiceImpl implements CarService {
     @Autowired
     private FeatureValueRepository featureValueRepository;
 
+    @Autowired
+    private CarMapper carMapper;
+
     @Override
     public CarCreateResponse createCar(CarCreateRequest carCreateRequest) {
 
@@ -41,6 +45,10 @@ public class CarServiceImpl implements CarService {
             throw new RuntimeException("\"Invalid feature or feature value data. " +
                     "Please ensure that each feature is associated with a valid value, " +
                     "and new features must include new feature values.\"\n");
+        }
+
+        if (carCreateRequest.isDuplicateFeature()) {
+            throw new RuntimeException("\"Duplicate feature. Please ensure that each feature is unique.\"\n");
         }
 
         CarTemplate carTemplate = carTemplateRepository.findById(carCreateRequest.getCarTemplateId())
@@ -63,7 +71,8 @@ public class CarServiceImpl implements CarService {
                         .allMatch(fv -> fv.getId() != featureValue.getId());
 
                 if (isNotFeatureValueUnique) {
-                    throw new RuntimeException("Feature value must be unique for each feature.");
+                    throw new RuntimeException("Feature value must be unique for each feature. (" +
+                            featureValue.getName() + ") cannot be added to (" + feature.getName() + ")");
                 }
 
                 car.getFeatureList().add(feature);
@@ -100,43 +109,17 @@ public class CarServiceImpl implements CarService {
             }
         });
         this.carRepository.save(car);
+        return this.carMapper.toCarCreateResponse(car);
+    }
 
-        CarCreateResponse finalResponse = new CarCreateResponse();
-        finalResponse.setName(car.getName());
-        finalResponse.setCarTemplateId(car.getCarTemplate().getId());
+    @Override
+    public List<CarResponse> findAll() {
+        List<Car> carList = carRepository.findAll();
+        return this.carMapper.toCarResponseList(carList);
+    }
 
-        final long[] count = {0};
-        car.getFeatureList().forEach(feature -> {
-            count[0] += 1;
-            FeatureForCarResponse featureForCarResponse = new FeatureForCarResponse();
-            featureForCarResponse.setCount(count[0]);
-
-            FeatureCreateResponse featureCreateResponse = FeatureCreateResponse.builder()
-                    .id(feature.getId())
-                    .name(feature.getName())
-                    .createdDate(feature.getCreatedDate())
-                    .updatedDate(feature.getUpdatedDate())
-                    .build();
-
-            featureForCarResponse.setFeatureCreateResponse(featureCreateResponse);
-
-            car.getFeatureValueList().forEach(featureValue -> {
-                if (featureValue.getFeature().getId() == feature.getId()) {
-                    FeatureValueCreateResponse featureValueCreateResponse = FeatureValueCreateResponse.builder()
-                            .id(featureValue.getId())
-                            .name(featureValue.getName())
-                            .createdDate(featureValue.getCreatedDate())
-                            .updatedDate(featureValue.getUpdatedDate())
-                            .build();
-
-                    featureForCarResponse.getFeatureValueCreateResponse().add(featureValueCreateResponse);
-                }
-
-            });
-
-            finalResponse.getFeatureForCarResponse().add(featureForCarResponse);
-        });
-
-        return finalResponse;
+    @Override
+    public Page<CarResponse> findAll(Specification<Car> specification, Pageable pageable) {
+        return this.carRepository.findAll(specification, pageable).map(carMapper::toCarResponse);
     }
 }

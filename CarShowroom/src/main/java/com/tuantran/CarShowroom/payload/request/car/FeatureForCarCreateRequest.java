@@ -1,5 +1,6 @@
 package com.tuantran.CarShowroom.payload.request.car;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tuantran.CarShowroom.payload.request.feature.FeatureCreateRequest;
 import com.tuantran.CarShowroom.payload.request.featurevalue.FeatureValueCreateRequest;
 import lombok.Builder;
@@ -16,7 +17,7 @@ public class FeatureForCarCreateRequest {
     private FeatureCreateRequest newFeature;
     private FeatureValueCreateRequest newFeatureValue;
 
-    @NonFinal
+    @JsonIgnore
     public boolean isValid() {
        // New feature & old value  => false
         if (newFeature != null && featureValueId != 0) {
