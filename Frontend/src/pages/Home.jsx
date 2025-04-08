@@ -59,8 +59,9 @@ const Home = () => {
     const listTopCar = [
         {
             id: 1,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -69,8 +70,9 @@ const Home = () => {
         },
         {
             id: 2,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -79,8 +81,9 @@ const Home = () => {
         },
         {
             id: 3,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -89,8 +92,9 @@ const Home = () => {
         },
         {
             id: 4,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -99,8 +103,9 @@ const Home = () => {
         },
         {
             id: 5,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -109,8 +114,9 @@ const Home = () => {
         },
         {
             id: 6,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -119,8 +125,9 @@ const Home = () => {
         },
         {
             id: 7,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -129,8 +136,9 @@ const Home = () => {
         },
         {
             id: 8,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
