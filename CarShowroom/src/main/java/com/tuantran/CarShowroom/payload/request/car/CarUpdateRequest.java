@@ -10,24 +10,19 @@ import java.util.List;
 
 @Data
 @Builder
-public class CarCreateRequest {
-    @NotBlank
+public class CarUpdateRequest {
     private String name;
-
-    @NotNull
     private long carTemplateId;
-
-    List<FeatureForCarCreateRequest> featureForCarCreateRequests;
-
+    List<FeatureForCarUpdateRequest> featureForCarUpdateRequests;
     @JsonIgnore
     public boolean isValid() {
-        return featureForCarCreateRequests.stream().allMatch(FeatureForCarCreateRequest::isValid);
+        return featureForCarUpdateRequests.stream().allMatch(FeatureForCarUpdateRequest::isValid);
     }
 
     @JsonIgnore
     public boolean isDuplicateFeature() {
-        List<Long> validIds = featureForCarCreateRequests.stream()
-                .map(FeatureForCarCreateRequest::getFeatureId)
+        List<Long> validIds = featureForCarUpdateRequests.stream()
+                .map(FeatureForCarUpdateRequest::getFeatureId)
                 .filter(id -> id != 0)
                 .toList();
 

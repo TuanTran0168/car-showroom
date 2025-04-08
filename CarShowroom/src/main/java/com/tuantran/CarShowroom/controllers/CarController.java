@@ -3,6 +3,7 @@ package com.tuantran.CarShowroom.controllers;
 import com.tuantran.CarShowroom.entity.Brand;
 import com.tuantran.CarShowroom.entity.Car;
 import com.tuantran.CarShowroom.payload.request.car.CarCreateRequest;
+import com.tuantran.CarShowroom.payload.request.car.CarUpdateRequest;
 import com.tuantran.CarShowroom.payload.response.car.CarCreateResponse;
 import com.tuantran.CarShowroom.payload.response.car.CarResponse;
 import com.tuantran.CarShowroom.service.CarService;
@@ -38,6 +39,14 @@ public class CarController {
     @PostMapping
     public ResponseEntity<CarCreateResponse> createCar(@Valid @RequestBody CarCreateRequest carCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.createCar(carCreateRequest));
+    }
+
+    /**
+     * 🔹 Update a car
+     */
+    @PatchMapping("/{id}")
+    public ResponseEntity<CarResponse> updateCar(@PathVariable long id, @Valid @RequestBody CarUpdateRequest carUpdateRequest) {
+        return ResponseEntity.ok(carService.updateCar(id, carUpdateRequest));
     }
 
     /**
@@ -86,5 +95,13 @@ public class CarController {
         Specification<Car> specification = GenericSpecificationUtils.combineSpecification(listSpecification);
         Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
         return ResponseEntity.ok(carService.findAll(specification, pageable));
+    }
+
+    /**
+     * 🔹 Get car by id
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<CarResponse> findById(@PathVariable long id) {
+        return ResponseEntity.ok(carService.findById(id));
     }
 }
