@@ -47,3 +47,4 @@ jwt:
 
 server:
   port: 8080
+  shutdown: immediate
