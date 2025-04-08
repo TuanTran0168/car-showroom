@@ -42,4 +42,9 @@ public class Car extends BaseEntity {
     )
     @ToString.Exclude
     private List<FeatureValue> featureValueList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "car", targetEntity = CarImage.class)
+    @ToString.Exclude
+    private List<CarImage> carImageList = new ArrayList<>();
 }
