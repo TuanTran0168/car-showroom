@@ -20,22 +20,20 @@ import java.util.stream.Stream;
 @Slf4j
 public class ApplicationSetupConfig {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @NonFinal
     private final String USERNAME_ADMIN = "admin";
     @NonFinal
     private final String PASSWORD_ADMIN = "123456";
     @NonFinal
     private final String ROLE_ADMIN = "ROLE_ADMIN";
-
     @NonFinal
     private final String USERNAME_USER = "user";
     @NonFinal
     private final String PASSWORD_USER = "123456";
     @NonFinal
     private final String ROLE_USER = "ROLE_USER";
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Bean
     ApplicationRunner applicationRunner(UserRepository userRepo,
@@ -44,7 +42,8 @@ public class ApplicationSetupConfig {
                                         BrandRepository brandRepo,
                                         SegmentRepository segmentRepo,
                                         FeatureRepository featureRepo,
-                                        FeatureValueRepository featureValueRepo) {
+                                        FeatureValueRepository featureValueRepo,
+                                        ColorRepository colorRepo) {
         return args -> {
             log.info("🚗 Initializing CarShowroom Application...");
 
@@ -68,6 +67,9 @@ public class ApplicationSetupConfig {
 
             // Initialize feature values for each feature
             initDefaultFeatureValues(featureRepo, featureValueRepo);
+
+            // Initialize colors
+            initDefaultColors(colorRepo);
 
             log.warn("⚠️ Check `securityFilterChain` if HTTP 403 with empty body occurs.");
             log.info("✅ Initialization complete.");
@@ -272,5 +274,35 @@ public class ApplicationSetupConfig {
                     repo.save(value);
                 }
         );
+    }
+
+    private Color createColor(String name, String code) {
+        Color color = new Color();
+        color.setName(name);
+        color.setCode(code);
+        return color;
+    }
+
+    private void saveIfNotExists(ColorRepository repo, Color color) {
+        repo.findByName(color.getName()).ifPresentOrElse(
+                c -> log.info("Color '{}' already exists", color.getName()),
+                () -> {
+                    log.info("Creating color '{}'", color.getName());
+                    repo.save(color);
+                }
+        );
+    }
+
+    private void initDefaultColors(ColorRepository colorRepo) {
+        List<Color> colors = List.of(
+                createColor("Trắng", "#FFFFFF"),
+                createColor("Đen", "#000000"),
+                createColor("Đỏ", "#FF0000"),
+                createColor("Xanh dương", "#0000FF"),
+                createColor("Bạc", "#C0C0C0"),
+                createColor("Xám", "#808080")
+        );
+
+        colors.forEach(color -> saveIfNotExists(colorRepo, color));
     }
 }
