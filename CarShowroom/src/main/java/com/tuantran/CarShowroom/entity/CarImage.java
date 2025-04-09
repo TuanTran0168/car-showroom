@@ -1,7 +1,10 @@
 package com.tuantran.CarShowroom.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -25,4 +28,9 @@ public class CarImage extends BaseEntity {
     @ManyToOne(targetEntity = Color.class)
     @JoinColumn(name = "color_id", referencedColumnName = "id", nullable = false)
     private Color color;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "carImage", targetEntity = Image.class)
+    @ToString.Exclude
+    private List<Image> imageList;
 }
