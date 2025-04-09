@@ -4,12 +4,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: Admin@123
-
-#    datasource:
-#      url: jdbc:postgresql://localhost:5433/car_showroom # database in docker
-#      driver-class-name: org.postgresql.Driver
-#      username: root
-#      password: Admin@123
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,20 +13,28 @@ spring:
         format_sql: true
         use_sql_comments: true
         # use_attribute_order: true # Sort column by alphabet
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
 logging:
   level:
     org.springframework.web: DEBUG
     org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
 
-#    DataSource-Proxy
-#    net:
-#      ttddyy:
-#        dsproxy:
-#          listener: debug
-
 jwt:
   secret: "cNdOiK0ggz77Svs34Y/Wg0CweqnLUi0WQacHsBfLO/0c67s8Bqrugr/iYf0jZo52"
   expiration: 180000
+
+cloudinary:
+  cloud-name: dtfj3any4
+  api-key: 779544184462517
+  api-secret: o4SKsVYt7L-JIS10-8-cUXGiqkM
+
+server:
+  port: 8080
+  shutdown: immediate
 
 #jackson:
 #  time-zone: Asia/Ho_Chi_Minh
@@ -45,6 +47,9 @@ jwt:
 #  api-docs:
 #    path: /v3/api-docs
 
-server:
-  port: 8080
-  shutdown: immediate
+#    DataSource-Proxy
+#    net:
+#      ttddyy:
+#        dsproxy:
+#          listener: debug
+
