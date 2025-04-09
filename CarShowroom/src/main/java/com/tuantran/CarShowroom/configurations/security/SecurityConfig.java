@@ -51,6 +51,7 @@ public class SecurityConfig {
             "/api/v1/cars/**",
             "/api/v1/cloudinary/**",
             "/api/v1/colors/**",
+            "/api/v1/car-images/**",
     };
 
     @Bean
