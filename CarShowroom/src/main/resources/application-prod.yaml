@@ -13,6 +13,10 @@ spring:
       hibernate:
         format_sql: true
         use_sql_comments: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 logging:
   level:
@@ -22,6 +26,11 @@ logging:
 jwt:
   secret: "ugvYK5hZ3VgH7TkQk4uqSefMwC37U94NO1+AxdlzJM7esgoXjApDmjOg3X6+sOz9"
   expiration: 180000
+
+cloudinary:
+  cloud-name: dtfj3any4
+  api-key: 779544184462517
+  api-secret: o4SKsVYt7L-JIS10-8-cUXGiqkM
 
 server:
   port: 8090
