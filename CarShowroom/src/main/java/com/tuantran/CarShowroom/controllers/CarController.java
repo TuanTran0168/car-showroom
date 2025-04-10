@@ -6,6 +6,8 @@ import com.tuantran.CarShowroom.payload.request.car.CarCreateRequest;
 import com.tuantran.CarShowroom.payload.request.car.CarUpdateRequest;
 import com.tuantran.CarShowroom.payload.response.car.CarCreateResponse;
 import com.tuantran.CarShowroom.payload.response.car.CarResponse;
+import com.tuantran.CarShowroom.payload.response.carimage.CarImageResponse;
+import com.tuantran.CarShowroom.service.CarImageService;
 import com.tuantran.CarShowroom.service.CarService;
 import com.tuantran.CarShowroom.utils.FilterParamUtils;
 import com.tuantran.CarShowroom.utils.GenericSpecificationUtils;
@@ -32,6 +34,9 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private CarImageService carImageService;
 
     /**
      * 🔹 Create a new car
@@ -64,11 +69,11 @@ public class CarController {
      */
     @GetMapping("/page")
     public ResponseEntity<Page<CarResponse>> findAllPage(
-            @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "1") int page,
             @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
             @Parameter(description = "Direction") @RequestParam(required = false) String direction,
-            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false" ) Boolean all,
+            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false") Boolean all,
             @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class))
             @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
@@ -103,5 +108,21 @@ public class CarController {
     @GetMapping("/{id}")
     public ResponseEntity<CarResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(carService.findById(id));
+    }
+
+    /**
+     * 🔹 Get car-image by carId
+     */
+    @GetMapping("/{id}/car-images")
+    public ResponseEntity<Page<CarImageResponse>> findCarImagesByCarId(
+            @PathVariable long id,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "1") int page,
+            @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
+            @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
+            @Parameter(description = "Direction") @RequestParam(required = false) String direction,
+            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false") Boolean all
+    ) throws MissingServletRequestParameterException {
+        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
+        return ResponseEntity.ok(carImageService.findByCar(id, pageable));
     }
 }
