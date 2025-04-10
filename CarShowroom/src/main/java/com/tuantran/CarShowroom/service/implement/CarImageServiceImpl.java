@@ -26,6 +26,9 @@ import com.tuantran.CarShowroom.service.CarImageService;
 import com.tuantran.CarShowroom.service.cloudinary.CloudinaryService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -153,6 +157,21 @@ public class CarImageServiceImpl implements CarImageService {
         this.carImageRepository.save(carImage);
 
         return this.carImageMapperCustom.toCarImageResponse(carImage);
+    }
+
+    @Override
+    public List<CarImageResponse> findAll() {
+        List<CarImage> carImages = this.carImageRepository.findAll();
+        return this.carImageRepository.findAll()
+                .stream()
+                .map(carImage -> this.carImageMapperCustom.toCarImageResponse(carImage))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<CarImageResponse> findAll(Specification<CarImage> specification, Pageable pageable) {
+        return this.carImageRepository.findAll(specification, pageable)
+                .map(carImage -> this.carImageMapperCustom.toCarImageResponse(carImage));
     }
 }
 

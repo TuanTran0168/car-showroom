@@ -6,6 +6,8 @@ import com.tuantran.CarShowroom.payload.request.car.CarCreateRequest;
 import com.tuantran.CarShowroom.payload.request.car.CarUpdateRequest;
 import com.tuantran.CarShowroom.payload.response.car.CarCreateResponse;
 import com.tuantran.CarShowroom.payload.response.car.CarResponse;
+import com.tuantran.CarShowroom.payload.response.carimage.CarImageResponse;
+import com.tuantran.CarShowroom.service.CarImageService;
 import com.tuantran.CarShowroom.service.CarService;
 import com.tuantran.CarShowroom.utils.FilterParamUtils;
 import com.tuantran.CarShowroom.utils.GenericSpecificationUtils;
@@ -32,6 +34,9 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private CarImageService carImageService;
 
     /**
      * 🔹 Create a new car
@@ -103,5 +108,13 @@ public class CarController {
     @GetMapping("/{id}")
     public ResponseEntity<CarResponse> findById(@PathVariable long id) {
         return ResponseEntity.ok(carService.findById(id));
+    }
+
+    /**
+     * 🔹 Get car-image by carId
+     */
+    @GetMapping("/{id}/car-images")
+    public ResponseEntity<List<CarImageResponse>> findCarImagesByCarId(@PathVariable long id) {
+        return null;
     }
 }
