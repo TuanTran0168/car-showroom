@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,12 +16,6 @@ import java.util.List;
 @Table(name = "spring_car_image_001")
 public class CarImage extends BaseEntity {
 
-    @Column(name = "url", nullable = false)
-    private String url;
-
-    @Column(name = "public_id", nullable = false)
-    private String publicId;
-
     @ManyToOne(targetEntity = Car.class)
     @JoinColumn(name = "car_id", referencedColumnName = "id", nullable = false)
     private Car car;
@@ -30,7 +25,7 @@ public class CarImage extends BaseEntity {
     private Color color;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "carImage", targetEntity = Image.class)
+    @OneToMany(mappedBy = "carImage", targetEntity = Image.class, orphanRemoval = true)
     @ToString.Exclude
-    private List<Image> imageList;
+    private List<Image> imageList = new ArrayList<>();
 }
