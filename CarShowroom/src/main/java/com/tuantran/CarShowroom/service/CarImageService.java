@@ -18,4 +18,5 @@ public interface CarImageService {
     CarImageResponse updateCarImage(long id, CarImageUpdateRequest carImageUpdateRequest);
     List<CarImageResponse> findAll();
     Page<CarImageResponse> findAll(Specification<CarImage> specification, Pageable pageable);
+    Page<CarImageResponse> findByCar(long carId, Pageable pageable);
 }

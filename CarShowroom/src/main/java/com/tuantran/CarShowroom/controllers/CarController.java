@@ -69,11 +69,11 @@ public class CarController {
      */
     @GetMapping("/page")
     public ResponseEntity<Page<CarResponse>> findAllPage(
-            @Parameter(description = "Page number") @RequestParam(defaultValue = "1" ) int page,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "1") int page,
             @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
             @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
             @Parameter(description = "Direction") @RequestParam(required = false) String direction,
-            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false" ) Boolean all,
+            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false") Boolean all,
             @Parameter(description = "Additional filter parameters", schema = @Schema(implementation = FilterParamUtils.class))
             @RequestParam Map<String, String> params
     ) throws MissingServletRequestParameterException {
@@ -114,7 +114,15 @@ public class CarController {
      * 🔹 Get car-image by carId
      */
     @GetMapping("/{id}/car-images")
-    public ResponseEntity<List<CarImageResponse>> findCarImagesByCarId(@PathVariable long id) {
-        return null;
+    public ResponseEntity<Page<CarImageResponse>> findCarImagesByCarId(
+            @PathVariable long id,
+            @Parameter(description = "Page number") @RequestParam(defaultValue = "1") int page,
+            @Parameter(description = "Size per page") @RequestParam(defaultValue = "5") int size,
+            @Parameter(description = "Sort by") @RequestParam(required = false) String sort,
+            @Parameter(description = "Direction") @RequestParam(required = false) String direction,
+            @Parameter(description = "All data in one page") @RequestParam(defaultValue = "false") Boolean all
+    ) throws MissingServletRequestParameterException {
+        Pageable pageable = PageSizeUtils.getPageable(page, size, sort, direction, all);
+        return ResponseEntity.ok(carImageService.findByCar(id, pageable));
     }
 }
