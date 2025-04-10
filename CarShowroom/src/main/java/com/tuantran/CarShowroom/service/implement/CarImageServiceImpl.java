@@ -173,5 +173,13 @@ public class CarImageServiceImpl implements CarImageService {
         return this.carImageRepository.findAll(specification, pageable)
                 .map(carImage -> this.carImageMapperCustom.toCarImageResponse(carImage));
     }
+
+    @Override
+    public Page<CarImageResponse> findByCar(long carId, Pageable pageable) {
+        Car car = this.carRepository.findById(carId)
+                .orElseThrow(() -> new RuntimeException("Car not found"));
+        return this.carImageRepository.findByCar(car, pageable)
+                .map(carImage -> this.carImageMapperCustom.toCarImageResponse(carImage));
+    }
 }
 

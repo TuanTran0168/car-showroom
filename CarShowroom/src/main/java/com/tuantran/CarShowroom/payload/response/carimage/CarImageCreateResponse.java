@@ -11,8 +11,10 @@ import java.util.List;
 @Data
 public class CarImageCreateResponse {
     private long id;
-    private long carId;
-    private long colorId;
+//    private long carId;
+//    private long colorId;
+    private CarForCarImageResponse car;
+    private ColorForCarResponse color;
     private List<ImageCreateResponse> images = new ArrayList<>();
     private Date createdDate;
     private Date updatedDate;

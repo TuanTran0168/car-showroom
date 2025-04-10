@@ -13,6 +13,7 @@ import com.tuantran.CarShowroom.service.CarImageService;
 import com.tuantran.CarShowroom.utils.FilterParamUtils;
 import com.tuantran.CarShowroom.utils.GenericSpecificationUtils;
 import com.tuantran.CarShowroom.utils.PageSizeUtils;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
@@ -62,7 +63,11 @@ public class CarImageController {
 
     /**
      * 🔹 Update a car image
+     * 🔹 You can also delete existing images using the `removeImageIds` field.
      */
+    @Operation(
+            description = "You can also delete existing images using the `removeImageIds` field."
+    )
     @PatchMapping(path = "/{id}",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -103,10 +108,6 @@ public class CarImageController {
     ) throws MissingServletRequestParameterException {
         List<Specification<CarImage>> listSpecification = new ArrayList<>();
 
-        if (params.containsKey("name")) {
-            String name = params.get("name");
-            listSpecification.add(GenericSpecificationUtils.fieldContains("name", name));
-        }
         if (params.containsKey("active")) {
             boolean active = Boolean.parseBoolean(params.get("active"));
             listSpecification.add(GenericSpecificationUtils.fieldEquals("active", active));
