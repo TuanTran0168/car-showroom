@@ -17,7 +17,10 @@ import b6 from "../../assets/brands/b6.png";
 
 import c1 from "../../assets/cars/c1.png";
 
+import contact1 from "../../assets/image/contact1.png";
 import { BsArrowUpRight } from "react-icons/bs";
+import { IoPhonePortraitOutline, IoMailOutline } from "react-icons/io5";
+
 import BrandCard from "../../components/BrandCard/BrandCard";
 import CarCard from "../../components/CarCard/CarCard";
 
@@ -208,6 +211,39 @@ const Home = () => {
                             </a>
                         </div>
                         <div className="top-cars--list">{listCarsCard}</div>
+                    </div>
+
+                    <div className="contact-us">
+                        <div className="contact-us__container">
+                            <div className="contact-us__details">
+                                <h2>
+                                    Have more questions? Don't hesitate to reach
+                                    us
+                                </h2>
+                                <span>
+                                    123A/2 Hùng Vương, Phường 4, Quận 5, TP. Hồ
+                                    Chí Minh
+                                </span>
+                                <div className="details-container">
+                                    <div>
+                                        <IoPhonePortraitOutline />
+                                        +76 956 039 999
+                                    </div>
+                                    <div>
+                                        <IoMailOutline />
+                                        ali@boxcars.com
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="contact-us__image">
+                                <img src={contact1} alt="" />
+                                </div> */}
+                            <div class="car-mask">
+                                <div class="car-bg group">
+                                    <img src={contact1} alt="" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
