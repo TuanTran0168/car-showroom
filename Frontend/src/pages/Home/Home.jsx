@@ -1,26 +1,28 @@
 import React from "react";
 import "./Home.scss";
-import SearchHome from "../components/SearchHome";
+import SearchHome from "../../components/SearchHome/SearchHome";
 
-import suv from "../assets/models/suv.svg";
-import sedan from "../assets/models/sedan.svg";
-import hatchback from "../assets/models/hatchback.svg";
-import coupe from "../assets/models/coupe.svg";
-import hybrid from "../assets/models/hybrid.svg";
+import suv from "../../assets/models/suv.svg";
+import sedan from "../../assets/models/sedan.svg";
+import hatchback from "../../assets/models/hatchback.svg";
+import coupe from "../../assets/models/coupe.svg";
+import hybrid from "../../assets/models/hybrid.svg";
 
-import b1 from "../assets/brands/b1.png";
-import b2 from "../assets/brands/b2.png";
-import b3 from "../assets/brands/b3.png";
-import b4 from "../assets/brands/b4.png";
-import b5 from "../assets/brands/b5.png";
-import b6 from "../assets/brands/b6.png";
+import b1 from "../../assets/brands/b1.png";
+import b2 from "../../assets/brands/b2.png";
+import b3 from "../../assets/brands/b3.png";
+import b4 from "../../assets/brands/b4.png";
+import b5 from "../../assets/brands/b5.png";
+import b6 from "../../assets/brands/b6.png";
 
-import c1 from "../assets/cars/c1.png";
+import c1 from "../../assets/cars/c1.png";
 
+import contact1 from "../../assets/image/contact1.png";
 import { BsArrowUpRight } from "react-icons/bs";
-import BrandCard from "../components/BrandCard";
-import Footer from "../components/Footer";
-import CarCard from "../components/CarCard";
+import { IoPhonePortraitOutline, IoMailOutline } from "react-icons/io5";
+
+import BrandCard from "../../components/BrandCard/BrandCard";
+import CarCard from "../../components/CarCard/CarCard";
 
 const Home = () => {
     const listBrand = [
@@ -59,8 +61,9 @@ const Home = () => {
     const listTopCar = [
         {
             id: 1,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -69,8 +72,9 @@ const Home = () => {
         },
         {
             id: 2,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -79,8 +83,9 @@ const Home = () => {
         },
         {
             id: 3,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -89,8 +94,9 @@ const Home = () => {
         },
         {
             id: 4,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -99,8 +105,9 @@ const Home = () => {
         },
         {
             id: 5,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -109,8 +116,9 @@ const Home = () => {
         },
         {
             id: 6,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -119,8 +127,9 @@ const Home = () => {
         },
         {
             id: 7,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -129,8 +138,9 @@ const Home = () => {
         },
         {
             id: 8,
-            name: "Corolla Altis – 2023",
+            name: "Corolla Altis",
             image: c1,
+            model: "sedan",
             fuel: "Xăng",
             transmission: "Số sàn",
             seat: 5,
@@ -201,6 +211,39 @@ const Home = () => {
                             </a>
                         </div>
                         <div className="top-cars--list">{listCarsCard}</div>
+                    </div>
+
+                    <div className="contact-us">
+                        <div className="contact-us__container">
+                            <div className="contact-us__details">
+                                <h2>
+                                    Have more questions? Don't hesitate to reach
+                                    us
+                                </h2>
+                                <span>
+                                    123A/2 Hùng Vương, Phường 4, Quận 5, TP. Hồ
+                                    Chí Minh
+                                </span>
+                                <div className="details-container">
+                                    <div>
+                                        <IoPhonePortraitOutline />
+                                        +76 956 039 999
+                                    </div>
+                                    <div>
+                                        <IoMailOutline />
+                                        ali@boxcars.com
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="contact-us__image">
+                                <img src={contact1} alt="" />
+                                </div> */}
+                            <div class="car-mask">
+                                <div class="car-bg group">
+                                    <img src={contact1} alt="" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

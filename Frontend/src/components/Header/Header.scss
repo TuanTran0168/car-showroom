@@ -1,0 +1,96 @@
+.header-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 1;
+    width: 100%;
+    padding: 1.5rem 3rem;
+
+    .logo {
+        h1 {
+            position: relative;
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 2.1rem;
+            font-family: "Bebas Neue", sans-serif;
+            color: white;
+        }
+        ::after {
+            content: "🖕";
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-transform: uppercase;
+            font-size: 2.1rem;
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--active);
+            z-index: -1;
+            transition: 0.5s;
+            transform: scale3d(0);
+            transform: rotateZ(0);
+            opacity: 0;
+        }
+
+        &:hover {
+            ::after {
+                top: 200px;
+                left: 150px;
+                font-size: 15rem;
+                opacity: 1;
+                transform: scale3d(2);
+                transform: rotateZ(720deg);
+            }
+        }
+    }
+
+    nav {
+        a {
+            position: relative;
+            display: inline-block;
+            font-weight: 500;
+            color: white !important;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+            // padding: 1rem 0;
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: white !important;
+                transition: 0.3s;
+            }
+
+            &:hover {
+                &::after {
+                    width: 100%;
+                }
+            }
+        }
+
+        #submit-listing {
+            background-color: white;
+            color: black !important;
+            padding: 0.8rem 1.3rem;
+            border-radius: 1.5rem;
+            margin-left: 20px;
+            transition: 0.2s;
+
+            &:hover {
+                &::after {
+                    opacity: 1;
+                    width: 0;
+                }
+                background-color: var(--active);
+                color: white !important;
+            }
+        }
+    }
+}
