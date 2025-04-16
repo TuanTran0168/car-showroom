@@ -9,7 +9,7 @@ const Header = () => {
             </a>
             <nav>
                 <Link to="/">Trang chủ</Link>
-                <Link to="/cars">Khám phá</Link>
+                <Link to="/explore">Khám phá</Link>
                 <Link to="/about">Về chúng tôi</Link>
                 <Link to="/contact" style={{ color: "#fff" }}>
                     Liên hệ
