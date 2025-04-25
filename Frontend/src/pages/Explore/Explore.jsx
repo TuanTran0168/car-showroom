@@ -2,6 +2,7 @@ import React from "react";
 import "./Explore.scss";
 import CarCard from "../../components/CarCard/CarCard";
 import { listBrand, listTopCar } from "../../common/data/mockData";
+import FilterItem from "../../components/FilterItem/FilterItem";
 
 const Explore = () => {
     const listCarsCard = listTopCar?.map((v) => {
@@ -21,6 +22,12 @@ const Explore = () => {
                         <h2>Filter</h2>
                         <span>CLEAR ALL FILTERS</span>
                     </div>
+                    <FilterItem />
+                    <FilterItem />
+                    <FilterItem />
+                    <FilterItem />
+                    <FilterItem />
+                    <FilterItem />
                 </aside>
                 <main>
                     <div className="sortBar">

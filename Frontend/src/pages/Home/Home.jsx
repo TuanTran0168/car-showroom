@@ -108,8 +108,8 @@ const Home = () => {
                             {/* <div className="contact-us__image">
                                 <img src={contact1} alt="" />
                                 </div> */}
-                            <div class="car-mask">
-                                <div class="car-bg group">
+                            <div className="car-mask">
+                                <div className="car-bg group">
                                     <img src={contact1} alt="" />
                                 </div>
                             </div>

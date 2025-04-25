@@ -57,7 +57,7 @@ const Footer = () => {
                 <span>© 2025 exemple.com. All rights reserved.</span>
                 <div>
                     <a href="#">Terms & Conditions</a>
-                    <span class="w-[3px] h-[3px] bg-white rounded-full inline-block"></span>
+                    <span className="w-[3px] h-[3px] bg-white rounded-full inline-block"></span>
                     <a href="#">Privacy notice</a>
                 </div>
             </div>

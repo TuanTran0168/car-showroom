@@ -30,17 +30,25 @@
             position: sticky;
             top: 0;
             width: 30%;
-            height: 300px;
+            // height: 300px;
+            max-height: 100vh; /* Giới hạn tối đa theo viewport */
+            overflow-y: auto;
             background: rgb(255, 255, 255);
             border: 1px solid #e0e0e0;
             border-left: none;
             border-top: none;
+            user-select: none;
 
             .aside-head {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
+                align-items: flex-end;
                 padding: 1.5rem;
+                border-bottom: solid 1px #e0e0e0;
+
+                span {
+                    cursor: pointer;
+                }
             }
         }
         main {

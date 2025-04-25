@@ -1,0 +1,41 @@
+.filter {
+    border-bottom: solid 1px #e0e0e0;
+    &--head {
+        padding: 1.5rem;
+        cursor: pointer;
+        background-color: red;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .arrow-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .arrow-icon.rotate {
+            transform: rotate(180deg);
+        }
+    }
+    &--main {
+        background-color: aqua;
+        max-height: 0;
+        overflow: hidden;
+        transition: 0.5s;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        &__item {
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+        }
+    }
+
+    .focus {
+        background-color: #f4f4f4;
+    }
+
+    .expanded {
+        max-height: 1000px;
+    }
+}
