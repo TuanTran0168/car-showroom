@@ -130,3 +130,26 @@ export const listTopCar = [
         price: 2000000000,
     },
 ];
+
+export const listModels = [
+    {
+        id: 1,
+        name: "SUV",
+    },
+    {
+        id: 2,
+        name: "Sedan",
+    },
+    {
+        id: 3,
+        name: "Hatchback",
+    },
+    {
+        id: 4,
+        name: "Coupe",
+    },
+    {
+        id: 5,
+        name: "Hybrid",
+    },
+];

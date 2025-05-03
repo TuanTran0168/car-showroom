@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
+import { CiCircleCheck } from "react-icons/ci";
+
+import { listModels } from "../../common/data/mockData";
 import "./FilterItem.scss";
 
-const Item = ({ isFocused, onClick }) => {
+const Item = ({ props, isFocused, onClick }) => {
     return (
         <div
             className={`filter--main__item ${isFocused ? "focus" : ""}`}
             onClick={onClick}
         >
-            <h3>alskdjlfkjasdlf</h3>
+            <h3>{props.name}</h3>
+            <CiCircleCheck
+                className={`${isFocused ? "display" : "hide"}`}
+                fontSize={18}
+            />
         </div>
     );
 };
@@ -35,11 +42,12 @@ const FilterItem = () => {
                 />
             </div>
             <div className={`filter--main ${expanded ? "expanded" : ""}`}>
-                {[0, 1, 2, 3].map((i) => (
+                {listModels.map((v) => (
                     <Item
-                        key={i}
-                        isFocused={focusedIndex === i}
-                        onClick={() => handleItemClick(i)}
+                        key={v.id}
+                        isFocused={focusedIndex === v.id}
+                        props={v}
+                        onClick={() => handleItemClick(v.id)}
                     />
                 ))}
             </div>
