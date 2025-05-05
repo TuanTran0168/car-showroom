@@ -1,0 +1,71 @@
+.car-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 23%;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    border: 1px solid #e9e9e9;
+    transition: 0.2s;
+    color: var(--active) !important;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+    }
+
+    img {
+        border-radius: 5px 5px 0 0;
+    }
+
+    .car-info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem;
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+
+        .model {
+            font-weight: 300;
+            color: #333;
+            text-transform: capitalize;
+        }
+
+        h4 {
+            font-weight: 800;
+        }
+
+        .price {
+            position: relative;
+            font-size: 1.5rem;
+            font-weight: 800;
+
+            &::after {
+                content: "VNĐ";
+                position: absolute;
+                top: 0;
+                font-size: 0.6rem;
+                font-weight: bold;
+            }
+        }
+
+        .attr {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            padding-top: 10px;
+            border-top: 1px solid #e9e9e9;
+
+            .attr-item {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.9rem;
+                span {
+                    color: rgb(69, 66, 66);
+                }
+            }
+        }
+    }
+}
