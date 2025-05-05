@@ -1,10 +1,10 @@
 spring:
   datasource:
     #    The database in Render has been suspended, contact me to resume database
-    url: jdbc:postgresql://dpg-cvnpf224d50c73d1u7og-a.oregon-postgres.render.com:5432/car_showroom # database in Render
+    url: jdbc:postgresql://dpg-d0ca9g15pdvs73de0kng-a.oregon-postgres.render.com:5432/car_showroom_mhue # database in Render
     driver-class-name: org.postgresql.Driver
     username: tuantran
-    password: GKaL5wjNq2Ft7uPda46xPZSBGiyaFSP0
+    password: nSBpL43ZbjN1QHoWpUZ9BxjZAmHvs8Fa
   jpa:
     hibernate:
       ddl-auto: create
