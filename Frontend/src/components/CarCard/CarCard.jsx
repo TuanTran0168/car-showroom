@@ -7,12 +7,15 @@ import "./CarCard.scss";
 
 const CarCard = ({ props }) => {
     return (
-        <div className="car-container">
+        <a href="#" className="car-container">
             <img src={props.image} alt="" />
             <div className="car-info">
                 <h4>{props.name}</h4>
+                <div className="model">{props.model}</div>
+                <span className="price">
+                    {props.price.toLocaleString("vi-VN")}
+                </span>
 
-                <hr />
                 <div className="attr">
                     <div className="attr-item fuel">
                         <LuFuel size={18} />
@@ -24,17 +27,15 @@ const CarCard = ({ props }) => {
                     </div>
                     <div className="attr-item seat">
                         <PiSeatFill size={18} />
-                        <span>{props.seat}</span>
+                        <span>{props.seat} chỗ</span>
                     </div>
                     <div className="attr-item volume">
                         <IoSpeedometerOutline size={18} />
                         <span>{props.volume}</span>
                     </div>
                 </div>
-                <hr />
-                <span>{props.price}</span>
             </div>
-        </div>
+        </a>
     );
 };
 

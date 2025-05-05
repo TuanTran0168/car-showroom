@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Home from "./pages/Home";
+import Header from "./components/Header/Header";
+import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import "./App.css";
 import Cars from "./pages/Cars";
-import Footer from "./components/Footer";
+import Footer from "./components/Footer/Footer";
 
 function App() {
     return (
