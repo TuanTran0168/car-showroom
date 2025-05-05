@@ -80,7 +80,7 @@ public class UserServiceTest {
 
         // THEN
         Assertions.assertThat(userCreateResponse.getName()).isEqualTo("Tuấn Trần Test Service!");
-        Assertions.assertThat(userCreateResponse.getUsername()).isEqualTo("tuantestservicee");
+        Assertions.assertThat(userCreateResponse.getUsername()).isEqualTo("tuantestservice");
         Assertions.assertThat(userCreateResponse.getRole().getName()).isEqualTo("ROLE_USER");
     }
 
