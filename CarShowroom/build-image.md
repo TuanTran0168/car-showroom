@@ -69,6 +69,11 @@ docker build -t car-showroom:0.0.1 .
 docker images
 ```
 
+```bash
+docker build -t <account>/car-showroom:0.0.1 .
+docker images
+```
+
 ---
 
 ## 6. Create Docker Network
@@ -121,3 +126,8 @@ spring:
 
 ---
 
+## 10. Push Image to Docker Hub
+
+```bash
+docker image push <account>/car-showroom:0.0.1
+```
