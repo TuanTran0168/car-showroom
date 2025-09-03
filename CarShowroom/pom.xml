@@ -129,6 +129,13 @@
 			<version>42.7.4</version>
 		</dependency>
 
+		<!--	H2 for Testing Environment	-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!--	DataSource-Proxy to show log SQL	-->
 		<dependency>
 			<groupId>com.github.gavlyukovskiy</groupId>
