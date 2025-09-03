@@ -38,6 +38,7 @@ public class SecurityConfig {
             "/v3/api-docs",
             "/swagger-ui/**",
             "/swagger-ui/oauth2-re",
+            "/h2-console/**",
     };
 
     private final String PUBLIC_ENDPOINTS[] = {
