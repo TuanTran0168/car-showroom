@@ -1,18 +1,37 @@
 spring:
   datasource:
-    #    The database in Render has been suspended, contact me to resume database
-    url: jdbc:postgresql://dpg-d0ca9g15pdvs73de0kng-a.oregon-postgres.render.com:5432/car_showroom_mhue # database in Render
-    driver-class-name: org.postgresql.Driver
-    username: tuantran
-    password: nSBpL43ZbjN1QHoWpUZ9BxjZAmHvs8Fa
+    url: jdbc:h2:mem:car_showroom_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         format_sql: true
         use_sql_comments: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  #spring:
+#  datasource:
+#    #    The database in Render has been suspended, contact me to resume database
+#    url: jdbc:postgresql://dpg-d0ca9g15pdvs73de0kng-a.oregon-postgres.render.com:5432/car_showroom_mhue # database in Render
+#    driver-class-name: org.postgresql.Driver
+#    username: tuantran
+#    password: nSBpL43ZbjN1QHoWpUZ9BxjZAmHvs8Fa
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        use_sql_comments: true
   servlet:
     multipart:
       max-file-size: 10MB
